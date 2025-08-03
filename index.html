@@ -2013,57 +2013,67 @@
     return active.id.split('-')[0]; // 'de', 'en', 'ru'
   }
 
+  function cleanText(raw) {
+    if (!raw || typeof raw !== 'string') return '';
+    let s = raw.trim();
+    if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+      s = s.slice(1, -1);
+    }
+    return s;
+  }
+
   function parseFrontMatter(md) {
     const fmMatch = md.match(/^---\s*([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
     if (!fmMatch) return { attrs: {}, body: md };
     const raw = fmMatch[1];
     const body = fmMatch[2];
-    const lines = raw.split(/\r?\n/);
     const attrs = {};
-    let i = 0;
-    while (i < lines.length) {
-      let line = lines[i];
-      if (!line.trim()) { i++; continue; }
-      const colonIdx = line.indexOf(':');
-      if (colonIdx === -1) { i++; continue; }
-      const key = line.slice(0, colonIdx).trim();
-      let rest = line.slice(colonIdx + 1).trim();
-
-      // block scalar (| or > or >- etc)
-      if (/^\|/.test(rest) || /^>/.test(rest)) {
-        const indicator = rest;
-        i++;
-        const blockLines = [];
-        while (i < lines.length && (/^\s+/.test(lines[i]) || lines[i] === '')) {
-          blockLines.push(lines[i].replace(/^\s?/, ''));
-          i++;
-        }
-        let value = blockLines.join('\n');
-        if (indicator.startsWith('>')) {
-          value = value
-            .split('\n')
-            .reduce((acc, cur) => {
-              if (cur === '') return acc + '\n';
-              if (acc === '') return cur;
-              return acc.endsWith('\n') ? acc + cur : acc + ' ' + cur;
-            }, '');
-        }
-        attrs[key] = value.trim();
-      } else {
-        let val = rest.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
-        attrs[key] = val;
-        i++;
-      }
-    }
+    raw.split(/\r?\n/).forEach(line => {
+      const idx = line.indexOf(':');
+      if (idx === -1) return;
+      const key = line.slice(0, idx).trim();
+      let val = line.slice(idx + 1).trim();
+      val = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
+      attrs[key] = val;
+    });
     return { attrs, body };
   }
 
+  // Парсит markdown-таблицу (предполагается первая строка — заголовки, вторая — сепараторы, третья и дальше — строки)
+  function parseMarkdownTable(md) {
+    const lines = md.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+    if (lines.length < 2 || !lines[0].startsWith('|')) return null;
+    const headerCells = lines[0].split('|').map(c => c.trim()).filter(c => c);
+    // Найти первую строку данных
+    let dataLine = null;
+    for (let i = 2; i < lines.length; i++) {
+      if (lines[i].startsWith('|')) {
+        dataLine = lines[i];
+        break;
+      }
+    }
+    if (!dataLine) return null;
+    const dataCells = dataLine.split('|').map(c => c.trim()).filter(c => c);
+    if (headerCells.length !== dataCells.length) {
+      // попытаемся выровнять по минимальной
+      const len = Math.min(headerCells.length, dataCells.length);
+      return headerCells.slice(0, len).reduce((acc, h, i) => {
+        acc[h] = dataCells[i];
+        return acc;
+      }, {});
+    }
+    return headerCells.reduce((acc, h, i) => {
+      acc[h] = dataCells[i];
+      return acc;
+    }, {});
+  }
+
   function storyExists(container, title) {
-    return Array.from(container.querySelectorAll('.story-title')).some(h => h.textContent.trim() === title.trim());
+    return Array.from(container.querySelectorAll('.story-title'))
+      .some(h => h.textContent.trim() === title.trim());
   }
 
   function createStoryCard({ title, description, image, alt }) {
-    const descriptionHTML = marked.parse(description || '');
     const card = document.createElement('div');
     card.className = 'story-card';
     card.innerHTML = `
@@ -2074,18 +2084,17 @@
       </div>
       <div class="story-content">
         <h3 class="story-title">${title}</h3>
-        <div class="story-excerpt">${descriptionHTML}</div>
+        <p class="story-excerpt">${description}</p>
       </div>
     `;
     return card;
   }
 
   async function loadStories() {
-    const lang = getLang(); // 'en'/'de'/'ru'
+    const lang = getLang();
     const container = document.querySelector(`#${lang}-content .stories-grid`);
     if (!container) return;
 
-    // не удаляем существующие, просто добавляем ненайденные
     try {
       const owner = 'visaforcourage';
       const repo = 'visaforcourage';
@@ -2106,19 +2115,57 @@
         const text = await res.text();
         const { attrs, body } = parseFrontMatter(text);
 
-        const titleKey = `title_${lang}`;
-        const descKey = `description_${lang}`;
-        const altKey = `alt_${lang}`;
+        // DEBUG: посмотреть, что пришло
+        console.group(`Story file: ${file.name}`);
+        console.log('Frontmatter attrs:', attrs);
+        console.log('Body snippet:', body.slice(0, 300));
+        console.groupEnd();
 
-        const title = attrs[titleKey] || attrs.title || file.name.replace(/[-_]/g, ' ');
-        if (storyExists(container, title)) continue; // не дублируем
+        // Попытка из таблицы
+        const tableData = parseMarkdownTable(body);
+        let title = '';
+        let description = '';
+        let image = '';
+        let alt = '';
 
-        const descriptionRaw = attrs[descKey] || '';
-        const fallback = body.trim().slice(0, 160) + '...';
-        const description = descriptionRaw || fallback;
+        if (tableData) {
+          // ключи вроде title_en, description_en, alt_en
+          const titleKey = `title_${lang}`;
+          const descKey = `description_${lang}`;
+          const altKey = `alt_${lang}`;
 
-        const image = attrs.image || '';
-        const alt = attrs[altKey] || title;
+          title = cleanText(tableData[titleKey] || tableData.title || file.name.replace(/[-_]/g, ' '));
+          description = cleanText(tableData[descKey] || tableData.description || '');
+          image = cleanText(tableData.image || '');
+          alt = cleanText(tableData[altKey] || tableData.alt || title);
+        } else {
+          // fallback на фронтматтер или тело
+          const titleKey = `title_${lang}`;
+          const descKey = `description_${lang}`;
+          const altKey = `alt_${lang}`;
+
+          title = cleanText(attrs[titleKey] || attrs.title || file.name.replace(/[-_]/g, ' '));
+
+          if (attrs[descKey]) {
+            description = cleanText(attrs[descKey]);
+          } else if (attrs.description) {
+            description = cleanText(attrs.description);
+          } else if (body) {
+            const para = body.split(/\r?\n\r?\n/)[0].trim();
+            description = cleanText(para);
+          }
+
+          image = cleanText(attrs.image || '');
+          alt = cleanText(attrs[altKey] || title);
+        }
+
+        if (!title) continue;
+        if (storyExists(container, title)) continue;
+
+        // ещё один fallback если описание вдруг пусто
+        if (!description) {
+          description = '(Нет описания)'; 
+        }
 
         const card = createStoryCard({
           title,
@@ -2136,173 +2183,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     loadStories();
     document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setTimeout(loadStories, 100);
-      });
-    });
-  });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
-  function getLang() {
-    const active = document.querySelector('.language-content.active');
-    if (!active) return 'en';
-    return active.id.split('-')[0];
-  }
-
-  function parseFrontMatter(md) {
-    const fmMatch = md.match(/^---\s*([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
-    if (!fmMatch) return { attrs: {}, body: md };
-    const raw = fmMatch[1];
-    const body = fmMatch[2];
-    const attrs = {};
-    raw.split(/\r?\n/).forEach(line => {
-      const idx = line.indexOf(':');
-      if (idx === -1) return;
-      const key = line.slice(0, idx).trim();
-      let val = line.slice(idx + 1).trim();
-      val = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
-      attrs[key] = val;
-    });
-    return { attrs, body };
-  }
-
-  // точный парсер первой строки markdown-таблицы
-  function parseMarkdownTable(body) {
-    const lines = body.split(/\r?\n/).map(l => l.trim()).filter(l => l);
-    if (lines.length < 3) return null; // нужна шапка, сепаратор и хотя бы одна строка
-    const headerLine = lines[0];
-    const separatorLine = lines[1];
-    const dataLine = lines[2];
-    if (!headerLine.startsWith('|') || !separatorLine.startsWith('|') || !dataLine.startsWith('|')) return null;
-
-    // разбиение по |, сохраняем пустые между двумя || 
-    const splitRow = row => {
-      // убираем внешний | и затем разбиваем
-      const trimmed = row.replace(/^\|/, '').replace(/\|$/, '');
-      return trimmed.split('|').map(cell => cell.trim());
-    };
-
-    const headers = splitRow(headerLine).map(h => h.toLowerCase());
-    const values = splitRow(dataLine);
-    const result = {};
-    headers.forEach((h, idx) => {
-      result[h] = values[idx] !== undefined ? values[idx] : '';
-    });
-    return result;
-  }
-
-  function cleanString(raw) {
-    if (!raw) return '';
-    let s = raw.trim();
-    if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
-      s = s.slice(1, -1);
-    }
-    return s;
-  }
-
-  function newsExists(container, title) {
-    return Array.from(container.querySelectorAll('.media-title'))
-      .some(h => h.textContent.trim() === title.trim());
-  }
-
-  function createNewsCard({ title, description, image, alt, date, source, url }) {
-    const card = document.createElement('a');
-    card.className = 'media-card';
-    if (url) {
-      card.href = url;
-      card.target = '_blank';
-      card.rel = 'noopener';
-    }
-    const renderedDescription = description ? marked.parse(description) : '';
-    card.innerHTML = `
-      <div class="media-player">
-        ${image ? `<img src="${image}" alt="${alt || title}" class="cover-photo" />` : ''}
-      </div>
-      <div class="media-info">
-        <h3 class="media-title">${title}</h3>
-        <div class="media-description">${renderedDescription}</div>
-        <div class="media-meta">
-          <span class="media-source">${source || (url ? (new URL(url)).hostname.replace('www.', '') : '')}</span>
-          ${date ? `<span class="media-date">${date}</span>` : ''}
-        </div>
-      </div>
-    `;
-    return card;
-  }
-
-  async function loadPress() {
-    const lang = getLang();
-    const container = document.querySelector(`#${lang}-content .media-grid`);
-    if (!container) return;
-
-    try {
-      const owner = 'visaforcourage';
-      const repo = 'visaforcourage';
-      const branch = 'main';
-      const folder = `content/press/${lang}`;
-      const listResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}?ref=${branch}`);
-      if (!listResp.ok) {
-        console.warn('Не удалось получить список пресс-файлов', await listResp.text());
-        return;
-      }
-      const items = await listResp.json();
-      const mdFiles = Array.isArray(items) ? items.filter(i => i.type === 'file' && i.name.toLowerCase().endsWith('.md')) : [];
-
-      for (const file of mdFiles) {
-        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${folder}/${encodeURIComponent(file.name)}`;
-        const res = await fetch(rawUrl);
-        if (!res.ok) continue;
-        const text = await res.text();
-        const { attrs, body } = parseFrontMatter(text);
-
-        // начальные значения
-        let title = cleanString(attrs.title || '');
-        let description = cleanString(attrs.description || '');
-        let image = attrs.image || '';
-        let alt = cleanString(attrs.alt || title);
-        let source = cleanString(attrs.source || '');
-        let date = cleanString(attrs.date || '');
-        let url = attrs.url || attrs.link || '';
-
-        // если нет содержимого в frontmatter — пробуем таблицу
-        if (!title || !description) {
-          const table = parseMarkdownTable(body);
-          if (table) {
-            title = title || cleanString(table.title) || file.name.replace(/[-_]/g, ' ');
-            description = description || cleanString(table.description || '');
-            image = image || (table.image || '');
-            alt = alt || cleanString(table.alt || title);
-            source = source || cleanString(table.source || '');
-            date = date || cleanString(table.date || '');
-            url = url || table.url || table.link || '';
-          }
-        }
-
-        if (!title) title = file.name.replace(/[-_]/g, ' ');
-        if (newsExists(container, title)) continue;
-
-        const card = createNewsCard({
-          title,
-          description,
-          image,
-          alt,
-          date,
-          source,
-          url
-        });
-        container.appendChild(card);
-      }
-    } catch (e) {
-      console.error('Ошибка загрузки пресс-новостей', e);
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    loadPress();
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => setTimeout(loadPress, 100));
+      btn.addEventListener('click', () => setTimeout(loadStories, 100));
     });
   });
 </script>
