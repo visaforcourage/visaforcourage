@@ -1,17 +1,66 @@
 backend:
-  name: github
-  repo: visaforcourage/visaforcourage
+  name: git-gateway
   branch: main
 
-media_folder: "uploads"
-public_folder: "/uploads"
-
 collections:
-  - name: "pages"
-    label: "Pages"
-    folder: "content/pages"
+  - name: "stories"
+    label: "Stories"
+    folder: "content/stories"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title (EN)", name: "title_en", widget: "string" }
+      - { label: "Title (RU)", name: "title_ru", widget: "string" }
+      - { label: "Title (DE)", name: "title_de", widget: "string" }
+
+      - { label: "Description (EN)", name: "description_en", widget: "text" }
+      - { label: "Description (RU)", name: "description_ru", widget: "text" }
+      - { label: "Description (DE)", name: "description_de", widget: "text" }
+
+      - { label: "Image URL", name: "image", widget: "string" }
+
+      - { label: "Alt text (EN)", name: "alt_en", widget: "string" }
+      - { label: "Alt text (RU)", name: "alt_ru", widget: "string" }
+      - { label: "Alt text (DE)", name: "alt_de", widget: "string" }
+
+  - name: "press_en"
+    label: "News (EN)"
+    folder: "content/press/en"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image URL", name: "image", widget: "string" }
+      - { label: "Alt text", name: "alt", widget: "string" }
+      - { label: "Source", name: "source", widget: "string" }
+      - { label: "Date", name: "date", widget: "string" }
+      - { label: "Link", name: "link", widget: "string" }
+
+  - name: "press_ru"
+    label: "Новости (RU)"
+    folder: "content/press/ru"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - { label: "Описание", name: "description", widget: "text" }
+      - { label: "Ссылка на изображение", name: "image", widget: "string" }
+      - { label: "Альт-текст", name: "alt", widget: "string" }
+      - { label: "Источник", name: "source", widget: "string" }
+      - { label: "Дата", name: "date", widget: "string" }
+      - { label: "Ссылка", name: "link", widget: "string" }
+
+  - name: "press_de"
+    label: "News (DE)"
+    folder: "content/press/de"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Beschreibung", name: "description", widget: "text" }
+      - { label: "Bild-URL", name: "image", widget: "string" }
+      - { label: "Alt-Text", name: "alt", widget: "string" }
+      - { label: "Quelle", name: "source", widget: "string" }
+      - { label: "Datum", name: "date", widget: "string" }
+      - { label: "Link", name: "link", widget: "string" }
