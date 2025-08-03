@@ -2144,10 +2144,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+  // общие хелперы
   function getLang() {
     const active = document.querySelector('.language-content.active');
     if (!active) return 'en';
-    return active.id.split('-')[0];
+    return active.id.split('-')[0]; // 'de', 'en', 'ru'
   }
 
   function parseFrontMatter(md) {
@@ -2155,46 +2156,30 @@
     if (!fmMatch) return { attrs: {}, body: md };
     const raw = fmMatch[1];
     const body = fmMatch[2];
-    const lines = raw.split(/\r?\n/);
     const attrs = {};
-    let i = 0;
-    while (i < lines.length) {
-      let line = lines[i];
-      if (!line.trim()) { i++; continue; }
-      const blockMatch = line.match(/^([A-Za-z0-9_]+):\s*(\||>)(\s*)$/);
-      if (blockMatch) {
-        const key = blockMatch[1];
-        const indicator = blockMatch[2];
-        i++;
-        const blockLines = [];
-        while (i < lines.length && (/^\s+/.test(lines[i]) || lines[i] === '')) {
-          blockLines.push(lines[i].replace(/^\s?/, ''));
-          i++;
-        }
-        let value = blockLines.join('\n');
-        if (indicator === '>') {
-          value = value
-            .split('\n')
-            .map(l => l.trim())
-            .join(' ');
-        }
-        attrs[key] = value.trim();
-      } else {
-        const simpleMatch = line.match(/^([A-Za-z0-9_]+):\s*(.*)$/);
-        if (simpleMatch) {
-          const key = simpleMatch[1];
-          let val = simpleMatch[2].trim();
-          val = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
-          attrs[key] = val;
-        }
-        i++;
-      }
-    }
+    raw.split(/\r?\n/).forEach(line => {
+      const idx = line.indexOf(':');
+      if (idx === -1) return;
+      const key = line.slice(0, idx).trim();
+      let val = line.slice(idx + 1).trim();
+      // снять обёртку в кавычки
+      val = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
+      attrs[key] = val;
+    });
     return { attrs, body };
   }
 
+  function cleanDescription(raw) {
+    if (!raw) return '';
+    let d = raw.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
+    // склеить строки, убрать лишние переносы
+    d = d.split(/\r?\n/).map(l => l.trim()).filter(Boolean).join(' ');
+    return d.trim();
+  }
+
   function newsExists(container, title) {
-    return Array.from(container.querySelectorAll('.media-title')).some(h => h.textContent.trim() === title.trim());
+    return Array.from(container.querySelectorAll('.media-title'))
+      .some(h => h.textContent.trim() === title.trim());
   }
 
   function createNewsCard({ title, description, image, alt, date, source, url }) {
@@ -2211,7 +2196,7 @@
       </div>
       <div class="media-info">
         <h3 class="media-title">${title}</h3>
-        <div class="media-description">${description ? marked.parse(description) : ''}</div>
+        <p class="media-description">${description}</p>
         <div class="media-meta">
           <span class="media-source">${source || (url ? (new URL(url)).hostname.replace('www.', '') : '')}</span>
           ${date ? `<span class="media-date">${date}</span>` : ''}
@@ -2221,23 +2206,8 @@
     return card;
   }
 
-  // Парсит markdown-таблицу типа | title | description | image | ... | и возвращает объект с ключами
-  function extractFromTable(md) {
-    const lines = md.split(/\r?\n/).map(l => l.trim()).filter(l => l.startsWith('|'));
-    if (lines.length < 3) return {}; // нет таблицы
-    const header = lines[0].split('|').map(s => s.trim()).filter(Boolean);
-    const separator = lines[1];
-    const dataLine = lines[2];
-    const values = dataLine.split('|').map(s => s.trim()).filter(Boolean);
-    const result = {};
-    header.forEach((h, idx) => {
-      result[h.toLowerCase()] = values[idx] || '';
-    });
-    return result;
-  }
-
   async function loadPress() {
-    const lang = getLang();
+    const lang = getLang(); // 'en'/'de'/'ru'
     const container = document.querySelector(`#${lang}-content .media-grid`);
     if (!container) return;
 
@@ -2248,11 +2218,10 @@
       const folder = `content/press/${lang}`;
       const listResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}?ref=${branch}`);
       if (!listResp.ok) {
-        console.warn('Не получилось список пресс-материалов', await listResp.text());
+        console.warn('Не удалось получить список пресс-файлов', await listResp.text());
         return;
       }
       const items = await listResp.json();
-      if (!Array.isArray(items)) return;
       const mdFiles = items.filter(i => i.type === 'file' && i.name.toLowerCase().endsWith('.md'));
 
       for (const file of mdFiles) {
@@ -2260,36 +2229,28 @@
         const res = await fetch(rawUrl);
         if (!res.ok) continue;
         const text = await res.text();
-
         const { attrs, body } = parseFrontMatter(text);
 
-        // Если frontmatter не дал нужных — пытаемся вытянуть из таблицы
-        let tableData = {};
-        if (!attrs.title || !attrs.description) {
-          tableData = extractFromTable(text);
-        }
+        // Названия и описания берутся из frontmatter
+        const title = attrs.title || file.name.replace(/[-_]/g, ' ');
+        if (newsExists(container, title)) continue; // не дублировать
 
-        const title = (attrs[`title_${lang}`] || attrs.title || tableData.title || file.name.replace(/[-_]/g, ' ')).trim();
-        if (newsExists(container, title)) continue;
+        const description = cleanDescription(
+          attrs[`description_${lang}`] ||
+          attrs.description ||
+          ''
+        );
 
-        let description = '';
-        if (attrs[`description_${lang}`]) {
-          description = attrs[`description_${lang}`];
-        } else if (attrs.description) {
-          description = attrs.description;
-        } else if (tableData.description) {
-          description = tableData.description;
-        } else if (body) {
-          // fallback: первый параграф тела (если не таблица)
-          const para = body.split(/\r?\n\r?\n/)[0].trim();
-          description = para;
-        }
+        // источник и дата могут быть в полях source / date
+        const source = attrs.source || '';
+        const date = attrs.date || '';
 
-        const image = attrs.image || tableData.image || '';
-        const alt = attrs[`alt_${lang}`] || attrs.alt || tableData.alt || title;
-        const source = attrs.source || tableData.source || '';
-        const date = attrs.date || tableData.date || '';
-        const url = attrs.url || '';
+        // изображение и alt
+        const image = attrs.image || '';
+        const alt = attrs.alt || title;
+
+        // если есть URL в attrs (например source_url или link), можно учитывать
+        const url = attrs.url || attrs.link || '';
 
         const card = createNewsCard({
           title,
@@ -2311,11 +2272,13 @@
     loadPress();
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', () => {
+        // иногда переключение языков асинхронно меняет active, дать время
         setTimeout(loadPress, 100);
       });
     });
   });
 </script>
+
 
 
 
