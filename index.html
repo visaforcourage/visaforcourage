@@ -2017,15 +2017,43 @@
     if (!fmMatch) return { attrs: {}, body: md };
     const raw = fmMatch[1];
     const body = fmMatch[2];
+    const lines = raw.split(/\r?\n/);
     const attrs = {};
-    raw.split(/\r?\n/).forEach(line => {
-      const idx = line.indexOf(':');
-      if (idx === -1) return;
-      const key = line.slice(0, idx).trim();
-      let val = line.slice(idx + 1).trim();
-      val = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
-      attrs[key] = val;
-    });
+    let i = 0;
+    while (i < lines.length) {
+      let line = lines[i];
+      if (!line.trim()) { i++; continue; }
+      const colonIdx = line.indexOf(':');
+      if (colonIdx === -1) { i++; continue; }
+      const key = line.slice(0, colonIdx).trim();
+      let rest = line.slice(colonIdx + 1).trim();
+
+      // block scalar (| or > or >- etc)
+      if (/^\|/.test(rest) || /^>/.test(rest)) {
+        const indicator = rest;
+        i++;
+        const blockLines = [];
+        while (i < lines.length && (/^\s+/.test(lines[i]) || lines[i] === '')) {
+          blockLines.push(lines[i].replace(/^\s?/, ''));
+          i++;
+        }
+        let value = blockLines.join('\n');
+        if (indicator.startsWith('>')) {
+          value = value
+            .split('\n')
+            .reduce((acc, cur) => {
+              if (cur === '') return acc + '\n';
+              if (acc === '') return cur;
+              return acc.endsWith('\n') ? acc + cur : acc + ' ' + cur;
+            }, '');
+        }
+        attrs[key] = value.trim();
+      } else {
+        let val = rest.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
+        attrs[key] = val;
+        i++;
+      }
+    }
     return { attrs, body };
   }
 
@@ -2034,6 +2062,7 @@
   }
 
   function createStoryCard({ title, description, image, alt }) {
+    const descriptionHTML = marked.parse(description || '');
     const card = document.createElement('div');
     card.className = 'story-card';
     card.innerHTML = `
@@ -2044,7 +2073,7 @@
       </div>
       <div class="story-content">
         <h3 class="story-title">${title}</h3>
-        <p class="story-excerpt">${description}</p>
+        <div class="story-excerpt">${descriptionHTML}</div>
       </div>
     `;
     return card;
