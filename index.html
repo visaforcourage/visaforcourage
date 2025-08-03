@@ -2147,23 +2147,54 @@
   function getLang() {
     const active = document.querySelector('.language-content.active');
     if (!active) return 'en';
-    return active.id.split('-')[0]; // 'de','en','ru'
+    return active.id.split('-')[0];
   }
 
+  // Улучшенный парсер frontmatter: поддерживает обычные и блочные (|, >) значения
   function parseFrontMatter(md) {
     const fmMatch = md.match(/^---\s*([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
     if (!fmMatch) return { attrs: {}, body: md };
     const raw = fmMatch[1];
     const body = fmMatch[2];
+    const lines = raw.split(/\r?\n/);
     const attrs = {};
-    raw.split(/\r?\n/).forEach(line => {
-      const idx = line.indexOf(':');
-      if (idx === -1) return;
-      const key = line.slice(0, idx).trim();
-      let val = line.slice(idx + 1).trim();
-      val = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
-      attrs[key] = val;
-    });
+    let i = 0;
+    while (i < lines.length) {
+      let line = lines[i];
+      if (!line.trim()) { i++; continue; }
+
+      const blockMatch = line.match(/^([A-Za-z0-9_]+):\s*(\||>)(\s*)$/);
+      if (blockMatch) {
+        // блочный формат
+        const key = blockMatch[1];
+        const indicator = blockMatch[2]; // | или >
+        i++;
+        const blockLines = [];
+        while (i < lines.length && (/^\s+/.test(lines[i]) || lines[i] === '')) {
+          // снимаем одну пробелную отступную единицу
+          blockLines.push(lines[i].replace(/^\s?/, ''));
+          i++;
+        }
+        let value = blockLines.join('\n');
+        if (indicator === '>') {
+          // складывает строки, как YAML folded
+          value = value
+            .split('\n')
+            .map(l => l.trim())
+            .join(' ');
+        }
+        attrs[key] = value.trim();
+      } else {
+        const simpleMatch = line.match(/^([A-Za-z0-9_]+):\s*(.*)$/);
+        if (simpleMatch) {
+          const key = simpleMatch[1];
+          let val = simpleMatch[2].trim();
+          val = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
+          attrs[key] = val;
+        }
+        i++;
+      }
+    }
     return { attrs, body };
   }
 
@@ -2185,7 +2216,7 @@
       </div>
       <div class="media-info">
         <h3 class="media-title">${title}</h3>
-        ${description ? `<p class="media-description">${marked.parse(description)}</p>` : ''}
+        ${description ? `<div class="media-description">${marked.parse(description)}</div>` : ''}
         <div class="media-meta">
           <span class="media-source">${source || (url ? (new URL(url)).hostname.replace('www.', '') : '')}</span>
           ${date ? `<span class="media-date">${date}</span>` : ''}
@@ -2199,6 +2230,7 @@
     const lang = getLang(); // 'en'/'de'/'ru'
     const container = document.querySelector(`#${lang}-content .media-grid`);
     if (!container) return;
+
     try {
       const owner = 'visaforcourage';
       const repo = 'visaforcourage';
@@ -2225,12 +2257,12 @@
         const altKey = `alt_${lang}`;
 
         const title = attrs[titleKey] || attrs.title || file.name.replace(/[-_]/g, ' ');
-        if (newsExists(container, title)) continue; // не дублируем
+        if (newsExists(container, title)) continue;
 
         let description = '';
         if (attrs[descKey]) {
           description = attrs[descKey];
-        } else {
+        } else if (body) {
           const plain = body.replace(/[\r\n]+/g, ' ').trim();
           description = plain.slice(0, 160) + (plain.length > 160 ? '…' : '');
         }
@@ -2266,6 +2298,7 @@
     });
   });
 </script>
+
 
 
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'966ccde0e4afe532',t:'MTc1Mzc5NDA3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
