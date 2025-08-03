@@ -2145,11 +2145,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-  // общие хелперы
   function getLang() {
     const active = document.querySelector('.language-content.active');
     if (!active) return 'en';
-    return active.id.split('-')[0]; // 'de', 'en', 'ru'
+    return active.id.split('-')[0];
   }
 
   function parseFrontMatter(md) {
@@ -2163,19 +2162,44 @@
       if (idx === -1) return;
       const key = line.slice(0, idx).trim();
       let val = line.slice(idx + 1).trim();
-      // снять обёртку в кавычки
       val = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
       attrs[key] = val;
     });
     return { attrs, body };
   }
 
-  function cleanDescription(raw) {
+  // точный парсер первой строки markdown-таблицы
+  function parseMarkdownTable(body) {
+    const lines = body.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+    if (lines.length < 3) return null; // нужна шапка, сепаратор и хотя бы одна строка
+    const headerLine = lines[0];
+    const separatorLine = lines[1];
+    const dataLine = lines[2];
+    if (!headerLine.startsWith('|') || !separatorLine.startsWith('|') || !dataLine.startsWith('|')) return null;
+
+    // разбиение по |, сохраняем пустые между двумя || 
+    const splitRow = row => {
+      // убираем внешний | и затем разбиваем
+      const trimmed = row.replace(/^\|/, '').replace(/\|$/, '');
+      return trimmed.split('|').map(cell => cell.trim());
+    };
+
+    const headers = splitRow(headerLine).map(h => h.toLowerCase());
+    const values = splitRow(dataLine);
+    const result = {};
+    headers.forEach((h, idx) => {
+      result[h] = values[idx] !== undefined ? values[idx] : '';
+    });
+    return result;
+  }
+
+  function cleanString(raw) {
     if (!raw) return '';
-    let d = raw.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
-    // склеить строки, убрать лишние переносы
-    d = d.split(/\r?\n/).map(l => l.trim()).filter(Boolean).join(' ');
-    return d.trim();
+    let s = raw.trim();
+    if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+      s = s.slice(1, -1);
+    }
+    return s;
   }
 
   function newsExists(container, title) {
@@ -2191,13 +2215,14 @@
       card.target = '_blank';
       card.rel = 'noopener';
     }
+    const renderedDescription = description ? marked.parse(description) : '';
     card.innerHTML = `
       <div class="media-player">
         ${image ? `<img src="${image}" alt="${alt || title}" class="cover-photo" />` : ''}
       </div>
       <div class="media-info">
         <h3 class="media-title">${title}</h3>
-        <p class="media-description">${description}</p>
+        <div class="media-description">${renderedDescription}</div>
         <div class="media-meta">
           <span class="media-source">${source || (url ? (new URL(url)).hostname.replace('www.', '') : '')}</span>
           ${date ? `<span class="media-date">${date}</span>` : ''}
@@ -2208,7 +2233,7 @@
   }
 
   async function loadPress() {
-    const lang = getLang(); // 'en'/'de'/'ru'
+    const lang = getLang();
     const container = document.querySelector(`#${lang}-content .media-grid`);
     if (!container) return;
 
@@ -2223,7 +2248,7 @@
         return;
       }
       const items = await listResp.json();
-      const mdFiles = items.filter(i => i.type === 'file' && i.name.toLowerCase().endsWith('.md'));
+      const mdFiles = Array.isArray(items) ? items.filter(i => i.type === 'file' && i.name.toLowerCase().endsWith('.md')) : [];
 
       for (const file of mdFiles) {
         const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${folder}/${encodeURIComponent(file.name)}`;
@@ -2232,26 +2257,31 @@
         const text = await res.text();
         const { attrs, body } = parseFrontMatter(text);
 
-        // Названия и описания берутся из frontmatter
-        const title = attrs.title || file.name.replace(/[-_]/g, ' ');
-        if (newsExists(container, title)) continue; // не дублировать
+        // начальные значения
+        let title = cleanString(attrs.title || '');
+        let description = cleanString(attrs.description || '');
+        let image = attrs.image || '';
+        let alt = cleanString(attrs.alt || title);
+        let source = cleanString(attrs.source || '');
+        let date = cleanString(attrs.date || '');
+        let url = attrs.url || attrs.link || '';
 
-        const description = cleanDescription(
-          attrs[`description_${lang}`] ||
-          attrs.description ||
-          ''
-        );
+        // если нет содержимого в frontmatter — пробуем таблицу
+        if (!title || !description) {
+          const table = parseMarkdownTable(body);
+          if (table) {
+            title = title || cleanString(table.title) || file.name.replace(/[-_]/g, ' ');
+            description = description || cleanString(table.description || '');
+            image = image || (table.image || '');
+            alt = alt || cleanString(table.alt || title);
+            source = source || cleanString(table.source || '');
+            date = date || cleanString(table.date || '');
+            url = url || table.url || table.link || '';
+          }
+        }
 
-        // источник и дата могут быть в полях source / date
-        const source = attrs.source || '';
-        const date = attrs.date || '';
-
-        // изображение и alt
-        const image = attrs.image || '';
-        const alt = attrs.alt || title;
-
-        // если есть URL в attrs (например source_url или link), можно учитывать
-        const url = attrs.url || attrs.link || '';
+        if (!title) title = file.name.replace(/[-_]/g, ' ');
+        if (newsExists(container, title)) continue;
 
         const card = createNewsCard({
           title,
@@ -2272,15 +2302,10 @@
   document.addEventListener('DOMContentLoaded', () => {
     loadPress();
     document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        // иногда переключение языков асинхронно меняет active, дать время
-        setTimeout(loadPress, 100);
-      });
+      btn.addEventListener('click', () => setTimeout(loadPress, 100));
     });
   });
 </script>
-
-
 
 
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'966ccde0e4afe532',t:'MTc1Mzc5NDA3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
