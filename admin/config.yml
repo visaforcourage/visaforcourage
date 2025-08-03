@@ -3,6 +3,13 @@ backend:
   repo: visaforcourage/visaforcourage
   branch: main
 
+media_folder: ""
+public_folder: ""
+
+media_library:
+  name: uploadcare
+  config:
+    publicKey: "demopublickey"
 collections:
   - name: "stories"
     label: "Stories"
