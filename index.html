@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Visa Ban - Support Russian Activists</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            background: transparent;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: #d32f2f;
+            color: white;
+            border-color: #d32f2f;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            color: white;
+            padding: 120px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 0.9;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+            text-stroke: 2px rgba(255,255,255,0.1);
+            -webkit-text-stroke: 2px rgba(255,255,255,0.1);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 48px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 20px 48px;
+            background: #ffffff;
+            color: #d32f2f;
+            text-decoration: none;
+            border-radius: 0;
+            font-weight: 800;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 3px solid #ffffff;
+        }
+        
+        .cta-button:hover {
+            background: #d32f2f;
+            color: #ffffff;
+        }
+        
+        .urgent-banner {
+            background: #ff5722;
+            color: white;
+            text-align: center;
+            padding: 16px 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        
+        .urgent-banner::before {
+            content: '●';
+            margin-right: 12px;
+            font-size: 1.2em;
+            color: #fff;
+        }
+        
+        .content-section {
+            padding: 80px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .content-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: #d32f2f;
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #d32f2f;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section-content {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #333;
+            max-width: 900px;
+        }
+        
+        .section-content p {
+            margin-bottom: 24px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 48px 32px;
+            background: #1a1a1a;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #d32f2f;
+        }
+        
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 16px;
+            color: #d32f2f;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .story-card {
+            background: #f8f8f8;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border-left: 6px solid #d32f2f;
+        }
+        
+        .story-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .story-media {
+            position: relative;
+            aspect-ratio: 3 / 3;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-placeholder, .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .video-placeholder:hover, .photo-placeholder:hover {
+            background: rgba(211, 47, 47, 0.9);
+        }
+        
+        .video-placeholder.large {
+            height: 300px;
+        }
+        
+        .play-icon {
+            margin-right: 12px;
+            font-size: 2rem;
+        }
+        
+        .photo-icon {
+            margin-right: 12px;
+            font-size: 2rem;
+        }
+        
+        .media-overlay {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .language-tag {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.95);
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333;
+        }
+        
+        .story-content {
+            padding: 32px;
+        }
+        
+        .story-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+        
+        .story-excerpt {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .story-date {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin: 60px 0;
+        }
+        
+        .media-card {
+            background: white;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .media-card:hover {
+            border-color: #d32f2f;
+        }
+        
+        .media-card.featured {
+            grid-column: span 2;
+            border-color: #d32f2f;
+            border-width: 3px;
+        }
+
+        a.media-card {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .media-player {
+            position: relative;
+            height: 200px;
+            background: #1a1a1a;
+        }
+        
+        .media-player iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+        }
+
+        .media-info {
+            padding: 24px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        
+        .media-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        
+        .media-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .media-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            padding-top: 16px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .media-source {
+            font-weight: 800;
+            color: #d32f2f;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .media-date {
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin: 60px 0;
+        }
+        
+        .action-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            color: #1a1a1a;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: #d32f2f;
+        }
+        
+        .action-card:hover {
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            color: white;
+            border-color: #d32f2f;
+        }
+        
+        .action-icon {
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            display: block;
+            letter-spacing: 2px;
+            color: #d32f2f;
+            border: 2px solid #d32f2f;
+            padding: 12px 16px;
+            border-radius: 4px;
+            background: rgba(211, 47, 47, 0.1);
+        }
+        
+        .action-card:hover .action-icon {
+            color: white;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .action-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .action-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .action-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #d32f2f;
+            color: white;
+            text-decoration: none;
+            border: 2px solid #d32f2f;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .action-button:hover {
+            background: transparent;
+            color: #d32f2f;
+        }
+        
+        .action-card:hover .action-button {
+            background: white;
+            color: #d32f2f;
+            border-color: white;
+        }
+        
+        .action-card:hover .action-button:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .letter-section {
+            background: #fdecea;
+            padding: 60px 40px;
+            margin: 40px 0;
+            border-left: 6px solid #d32f2f;
+        }
+        
+        .letter-intro {
+            margin-bottom: 40px;
+        }
+        
+        .letter-intro p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .letter-template {
+            background: white;
+            padding: 40px;
+            margin: 40px 0;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .letter-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #d32f2f;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .letter-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #333;
+        }
+        
+        .letter-content p {
+            margin-bottom: 20px;
+        }
+        
+        .letter-content ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        .letter-content li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .letter-cta {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .cta-button.large {
+            padding: 24px 60px;
+            font-size: 1.3rem;
+        }
+        
+        .cover-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }   
+        .sharing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        .share-card {
+            background: white;
+            padding: 40px;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .share-card:hover {
+            border-color: #d32f2f;
+        }
+        
+        .share-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .share-description {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .social-icon.twitter {
+            background: #1da1f2;
+            color: white;
+        }
+        
+        .social-icon.twitter:hover {
+            background: #0d8bd9;
+        }
+        
+        .social-icon.facebook {
+            background: #4267b2;
+            color: white;
+        }
+        
+        .social-icon.facebook:hover {
+            background: #365899;
+        }
+        
+        .social-icon.telegram {
+            background: #0088cc;
+            color: white;
+        }
+        
+        .social-icon.telegram:hover {
+            background: #006ba6;
+        }
+        
+        .social-icon.tiktok {
+            background: #000000;
+            color: white;
+        }
+        
+        .social-icon.tiktok:hover {
+            background: #333333;
+        }
+        
+        .social-icon.whatsapp {
+            background: #25d366;
+            color: white;
+        }
+        
+        .social-icon.whatsapp:hover {
+            background: #1ebe57;
+        }
+        
+        .social-icon.linkedin {
+            background: #0077b5;
+            color: white;
+        }
+        
+        .social-icon.linkedin:hover {
+            background: #005885;
+        }
+        
+        .social-icon.reddit {
+            background: #ff4500;
+            color: white;
+        }
+        
+        .social-icon.reddit:hover {
+            background: #e03d00;
+        }
+        
+        .share-button {
+            display: inline-block;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+        
+        .share-button.twitter {
+            background: #1da1f2;
+            color: white;
+            border-color: #1da1f2;
+        }
+        
+        .share-button.twitter:hover {
+            background: transparent;
+            color: #1da1f2;
+        }
+        
+        .share-button.facebook {
+            background: #4267b2;
+            color: white;
+            border-color: #4267b2;
+        }
+        
+        .share-button.facebook:hover {
+            background: transparent;
+            color: #4267b2;
+        }
+        
+        .share-button.email {
+            background: #d32f2f;
+            color: white;
+            border-color: #d32f2f;
+        }
+        
+        .share-button.email:hover {
+            background: transparent;
+            color: #d32f2f;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin: 40px 0;
+        }
+        
+        .event-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 32px;
+            display: flex;
+            gap: 32px;
+            transition: all 0.3s ease;
+        }
+        
+        .event-card:hover {
+            border-color: #d32f2f;
+        }
+        
+        .event-card.urgent {
+            border-color: #ff5722;
+            border-width: 3px;
+            background: linear-gradient(135deg, #fff 0%, #fff8f6 100%);
+        }
+        
+        .event-date {
+            text-align: center;
+            min-width: 80px;
+            background: #1a1a1a;
+            color: white;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .event-card.urgent .event-date {
+            background: #1a1a1a;
+        }
+        
+        .event-day {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+        
+        .event-month {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        
+        .event-details {
+            flex: 1;
+        }
+        
+        .event-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+        
+        .event-info {
+            margin-bottom: 20px;
+        }
+        
+        .event-time, .event-location, .event-organizer {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .event-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 24px;
+        }
+        
+        .event-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #d32f2f;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid #d32f2f;
+        }
+        
+        .event-button:hover {
+            background: transparent;
+            color: #d32f2f;
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .footer-content {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .language-content {
+            display: none;
+        }
+        
+        .language-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .language-switcher {
+                position: relative;
+                top: auto;
+                right: auto;
+                justify-content: center;
+                margin: 20px auto;
+                width: fit-content;
+            }
+            
+            .stories-grid, .media-grid, .action-grid, .sharing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .media-card.featured {
+                grid-column: span 1;
+            }
+            
+            .content-section {
+                padding: 60px 0;
+            }
+            
+            .letter-section {
+                padding: 40px 20px;
+                margin: 20px 0;
+            }
+            
+            .letter-template {
+                padding: 24px;
+            }
+            
+            .event-card {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .event-date {
+                min-width: auto;
+                width: 100px;
+                margin: 0 auto;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-button {
+                width: 200px;
+                text-align: center;
+            }
+        }
+    </style>
+
+<style>
+  .cta-button.large {
+    background: #d32f2f;
+    color: white;
+    border: 3px solid #d32f2f;
+  }
+  .cta-button.large:hover {
+    background: white;
+    color: #d32f2f;
+    border-color: #d32f2f;
+  }
+</style>
+
+</head>
+<body>
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="switchLanguage('de')">DE</button>
+        <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
+        <button class="lang-btn" onclick="switchLanguage('en')">EN</button>
+    </div>
+
+    <!-- English Content -->
+    <div id="en-content" class="language-content">
+        <div class="urgent-banner">
+            URGENT: Russian politcal activists are in danger - Act now
+        </div>
+        
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-subtitle">Crisis Alert</div>
+                    <h1>Stop the Visa Ban</h1>
+                    <p>German visa restrictions threaten to silence Russian democracy advocates and human rights defenders. We cannot let bureaucracy become a weapon against freedom.</p>
+                    <a href="#letter" class="cta-button">Take Action Now</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="content-section">
+                <h2 class="section-title">The Crisis</h2>
+                <div class="section-subtitle">Lives at stake. Democracy under threat.</div>
+                <div class="section-content">
+                    <p><strong>Russian activists, journalists, and civil society leaders face unprecedented persecution.</strong> Many have fled to Germany seeking safety and the opportunity to continue their vital work for democracy and human rights. We are greatful to German government for this opportunity.</p>
+                    <p><strong>The proposed visa restrictions would not only endanger these brave individuals but also weaken Germany's commitment to protecting those who fight for freedom, democracy, and human dignity.</strong></p>
+                </div>
+                
+                <div class="stats-grid">
+<div class="stats-grid">
+  <div class="stat-card">
+    <span class="stat-number">500+</span>
+    <span class="stat-label">Activists at Risk</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">6.5</span>
+    <span class="stat-label">Years in Prison Threaten Activists</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">1006</span>
+    <span class="stat-label">Political Prisoners in Russia</span>
+  </div>
+</div>
+</div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Voices from the Front Lines</h2>
+                <div class="section-subtitle">Real stories. Real people. Real consequences.</div>
+                <div class="stories-grid">
+                    <div class="story-card">
+  <div class="story-media">
+    <div class="photo-placeholder">
+  <img 
+  src="https://i.imgur.com/FPeTN9Z.jpeg" 
+  alt="Anastasiia Lukomskaia" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+    </div>
+</div>
+  <div class="story-content">
+    <h3 class="story-title">Anastasiia Lukomskaia, Artist and Political Activist</h3>
+    <p class="story-excerpt">
+      My name is Anastasiia Lukomskaia, I am an artist and political activist from Moscow. I moved to Germany in the summer of 2023 on a humanitarian visa, as the organization I belonged to (“Vesna”) was declared extremist in Russia. Over the past two years, I have completed integration courses, passed the C1-level German exam, and was admitted to a German university (HfG Karlsruhe). In my new country, I continue to actively engage in civic life — I joined the FDP party, was elected to the Migration and Integration Council of Herxheim, and volunteer as an interpreter helping Ukrainian refugees. I also participate in exhibitions and art projects throughout Germany, creating immersive video installations.
+    </p>
+  </div>
+</div>
+
+<div class="story-card">
+  <div class="story-media">
+    <div class="photo-placeholder">
+      <img 
+  src="https://i.imgur.com/9Vdx5wY.png" 
+  alt="Anna" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+    </div>
+  </div>
+  <div class="story-content">
+    <h3 class="story-title">Anna, Journalist</h3>
+    <p class="story-excerpt">
+      In June 2024, I came to Germany on a humanitarian visa (Section 22). Before that, I lived in Russia and worked as a journalist — filming and writing for independent international media, including German outlets. Because of my civic position, activism, and journalistic work, I was detained multiple times. I was on police watchlists and marked in their database as “unreliable.” Thanks to the humanitarian visa, I was able to leave and remain free. Sadly, my friends and colleagues — those who told the truth and stood up against the war and the authorities — are now in prison. Since April 2025, I’ve been working in Germany. I rent an apartment and pay taxes. Many people still remain in Russia who face criminal prosecution simply for speaking out against Putin’s lawlessness and repression. I ask you: please reconsider the temporary suspension of humanitarian visa issuance. For many, this is the only chance to escape and stay free.
+    </p>
+  </div>
+</div>
+
+<div class="story-card">
+  <div class="story-media">
+    <div class="photo-placeholder">
+      <img 
+  src="https://i.imgur.com/XAtRBMZ.png" 
+  alt="Anna" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+    </div>
+  </div>
+  <div class="story-content">
+    <h3 class="story-title">Maria, Political Activist</h3>
+    <p class="story-excerpt">
+      I am currently in the final stage of obtaining a German humanitarian visa. I managed to apply in mid-March 2025 (before the reshuffle in the Foreign Ministry). I am a journalist and political activist. In Russia, I am not only unable to do my work, but I also face the risk of being prosecuted for participating in an “extremist organization” and for spreading so-called “fake news” about the Russian Armed Forces.
+    </p>
+  </div>
+</div>
+                </div>
+            </section>
+
+            <section class="content-section hidden">
+                <h2 class="section-title">Media Coverage</h2>
+                <div class="section-subtitle">International attention. Growing pressure.</div>
+                <div class="media-grid">
+
+
+                    
+                </div>
+            </section>
+
+
+            <section class="content-section" id="action">
+  <h2 class="section-title">Send a Letter to the German Minister of the Interior</h2>
+  <div class="section-subtitle">Call for the restoration of the humanitarian visa program. Your voice can save lives.</div>
+
+  <div class="letter-section">
+    <div class="letter-intro">
+      <p><strong>The German government is considering ending a humanitarian visa program that has been a lifeline for Russian activists, human rights defenders, and independent journalists.</strong> This would put hundreds of democracy advocates at risk and silence their fight for freedom.</p>
+      <p><strong>Use this letter template to urge the Federal Ministry of the Interior to preserve this vital program.</strong></p>
+      <p><em><strong>Note:</strong> The letter will be sent in German to maximize its impact.</em></p>
+    </div>
+
+    <div class="letter-template">
+      <h3 class="letter-title">Letter Template to Minister Dobrindt</h3>
+      <div class="letter-content">
+        <p><strong>Subject: Urgent Appeal to Preserve the Humanitarian Visa Program for Russian Civil Society</strong></p>
+
+        <p>Dear Minister,</p>
+
+        <p>I am writing to express my deep concern over reports that the German government is considering ending its humanitarian visa program for Russian civil society activists, journalists, and human rights defenders.</p>
+
+        <p>This program has been a beacon of hope for hundreds of brave individuals who have dedicated their lives to promoting democracy, human rights, and the rule of law in Russia. These are not ordinary migrants — they are voices of conscience who have risked everything to expose corruption, defend political prisoners, document war crimes, and build networks of civil society.</p>
+
+        <p>Eliminating this program would:</p>
+        <ul>
+          <li><strong>Force democracy defenders back into persecution</strong> — many face prison, torture, or worse if returned to Russia</li>
+          <li><strong>Silence critical voices</strong> — these activists continue their vital work from Germany, reaching millions</li>
+          <li><strong>Undermine Germany’s moral leadership</strong> — this program symbolizes a commitment to universal values</li>
+          <li><strong>Weaken European security</strong> — independent Russian media and civil society are key in countering disinformation</li>
+        </ul>
+
+        <p>These individuals dream of returning to a free Russia. Until then, Germany’s humanitarian visa program gives them the safety and platform needed to carry on their crucial work.</p>
+
+        <p>I urge you to:</p>
+        <ul>
+          <li>Support the continuation and expansion of this program</li>
+          <li>Ensure sufficient resources and streamlined visa procedures</li>
+          <li>Recognize support for Russian civil society as an investment in Europe’s security and democratic values</li>
+        </ul>
+
+        <p>History will judge how we responded when defenders of democracy needed us most. Germany has the chance to be on the right side of history by preserving this lifeline to freedom.</p>
+
+        <p>Sincerely,<br>[Your Name]<br>[Your Address]<br>[Your Contact Information]</p>
+      </div>
+    </div>
+  </div>
+  <div class="letter-cta">
+  <a href="mailto:poststelle@bmi.bund.de?subject=Appell%20zum%20humanit%C3%A4ren%20Visa-Programm&body=Sehr%20geehrter%20Herr%20Minister,%0D%0A%0D%0AIch%20schreibe%20Ihnen,%20um%20meine%20gro%C3%9Fe%20Sorge%20bezuglich%20der%20Berichte%20auszudr%C3%BCcken,%20dass%20die%20deutsche%20Regierung%20erw%C3%A4gt,%20das%20humanit%C3%A4re%20Visa-Programm%20f%C3%BCr%20russische%20zivilgesellschaftliche%20Aktivist:innen,%20Journalist:innen%20und%20Menschenrechtler:innen%20zu%20beenden.%0D%0A%0D%0ADieses%20Programm%20war%20ein%20Hoffnungsschimmer%20f%C3%BCr%20Hunderte%20mutiger%20Menschen,%20die%20ihr%20Leben%20der%20F%C3%B6rderung%20von%20Demokratie,%20Menschenrechten%20und%20Rechtsstaatlichkeit%20in%20Russland%20gewidmet%20haben.%20Es%20handelt%20sich%20nicht%20um%20gew%C3%B6hnliche%20Migrant:innen%20%E2%80%93%20es%20sind%20Stimmen%20des%20Gewissens,%20die%20alles%20riskiert%20haben,%20um%20Korruption%20aufzudecken,%20politische%20Gefangene%20zu%20verteidigen,%20Kriegsverbrechen%20zu%20dokumentieren%20und%20Netzwerke%20der%20Zivilgesellschaft%20zu%20st%C3%A4rken.%0D%0A%0D%0ADie%20Abschaffung%20dieses%20Programms%20w%C3%BCrde:%0D%0A•%20Demokratieverteidiger:innen%20zur%C3%BCck%20in%20Verfolgung%20schicken%20%E2%80%93%20vielen%20drohen%20Haft,%20Folter%20oder%20Schlimmeres%20bei%20R%C3%BCckkehr%20nach%20Russland%0D%0A•%20Kritische%20Stimmen%20zum%20Schweigen%20bringen%20%E2%80%93%20ihre%20Arbeit%20aus%20Deutschland%20erreicht%20Millionen%20und%20gibt%20Hoffnung%0D%0A•%20Deutschlands%20moralische%20F%C3%BChrungsrolle%20untergraben%20%E2%80%93%20das%20Programm%20steht%20f%C3%BCr%20universelle%20Werte%20wie%20Freiheit%20und%20Menschenrechte%0D%0A•%20Europ%C3%A4ische%20Sicherheit%20schw%C3%A4chen%20%E2%80%93%20unabh%C3%A4ngige%20russische%20Stimmen%20sind%20entscheidend%20im%20Kampf%20gegen%20Desinformation%0D%0A%0D%0ADiese%20Menschen%20tr%C3%A4umen%20davon,%20in%20ein%20freies%20Russland%20zur%C3%BCckzukehren.%20Bis%20dahin%20brauchen%20sie%20Sicherheit%20und%20eine%20Plattform,%20um%20weiterzuarbeiten.%0D%0A%0D%0AIch%20bitte%20Sie:%0D%0A•%20Sich%20f%C3%BCr%20den%20Erhalt%20und%20Ausbau%20des%20Programms%20einzusetzen%0D%0A•%20Ausreichende%20Mittel%20und%20vereinfachte%20Verfahren%20sicherzustellen%0D%0A•%20Anerkennen,%20dass%20die%20Unterst%C3%BCtzung%20russischer%20Zivilgesellschaft%20eine%20Investition%20in%20Europas%20Sicherheit%20und%20Demokratie%20ist%0D%0A%0D%0ADie%20Geschichte%20wird%20bewerten,%20wie%20wir%20reagiert%20haben,%20als%20Freiheit%20bedroht%20war.%20Deutschland%20kann%20auf%20der%20richtigen%20Seite%20stehen,%20indem%20es%20dieses%20Programm%20bewahrt.%0D%0A%0D%0AMit%20freundlichen%20Gr%C3%BC%C3%9Fen,%0D%0A[Ihr%20Name]%0D%0A[Ihre%20Adresse]%0D%0A[Ihre%20Kontaktdaten]" class="cta-button large">Send now</a>
+</div>
+  </section>
+  <section class="content-section hidden">
+                <h2 class="section-title">Upcoming Events</h2>
+                <div class="section-subtitle">Join protests, rallies, and solidarity actions across Europe.</div>
+                
+                <div class="events-grid">
+                    <div class="event-card urgent">
+                        <div class="event-date">
+                            <div class="event-day">22</div>
+                            <div class="event-month">MAR</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Emergency Rally: Save Russian Activists</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 March 22, 2024 • 2:00 PM - 5:00 PM</div>
+                                <div class="event-location">📍 Brandenburg Gate, Berlin</div>
+                                <div class="event-organizer">👥 Organizer: Coalition for Russian Civil Society</div>
+                            </div>
+                            <p class="event-description">Mass demonstration demanding the German government preserve humanitarian visas for Russian democracy defenders. Prominent activists, journalists, and human rights defenders will speak.</p>
+                            <a href="#" class="event-button">Join Rally</a>
+                        </div>
+                    </div>
+                    
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">25</div>
+                            <div class="event-month">MAR</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Parliamentary Hearing: Visa Crisis</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 March 25, 2024 • 10:00 AM - 12:00 PM</div>
+                                <div class="event-location">📍 Bundestag, Berlin</div>
+                                <div class="event-organizer">👥 Organizer: Human Rights Committee</div>
+                            </div>
+                            <p class="event-description">Public hearing on the impact of visa restrictions on Russian civil society. Citizens can attend and submit written statements to parliamentarians.</p>
+                            <a href="#" class="event-button">Attend Hearing</a>
+                        </div>
+                    </div>
+                    
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">28</div>
+                            <div class="event-month">MAR</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Solidarity Concert for Freedom</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 March 28, 2024 • 7:00 PM - 10:00 PM</div>
+                                <div class="event-location">📍 Tempodrom, Berlin</div>
+                                <div class="event-organizer">👥 Organizer: Artists for Democracy</div>
+                            </div>
+                            <p class="event-description">Benefit concert featuring Russian and German artists to raise funds for legal support of threatened activists. All proceeds go to assistance with visa applications.</p>
+                            <a href="#" class="event-button">Buy Tickets</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section">
+                <h2 class="section-title">Share This Campaign</h2>
+                <div class="section-subtitle">Help spread awareness about this critical issue.</div>
+                
+                <div class="sharing-grid">
+                    <div class="share-card">
+                        <h3 class="share-title">Social Media</h3>
+                        <p class="share-description">Defend Germany’s humanitarian visa program for political activists from Russia and Belarus! Send a letter to Minister Dobrindt.</p>
+                        <div class="social-icons">
+                            <a href="https://twitter.com/intent/tweet?text=Protect%20humanitarian%20visa%20programs%20in%20Germany%20for%20activists%20from%20Russia%20and%20Belarus!%20Send%20a%20letter%20to%20Minister%20Dobrindt!%20%23SaveRussianActivists%20%23HumanitarianVisas" class="social-icon twitter" title="Share on Twitter">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://example.com" class="social-icon facebook" title="Share on Facebook">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <a href="https://t.me/share/url?url=https://example.com&text=Protect%20humanitarian%20visa%20programs%20in%20Germany%20for%20activists%20from%20Russia%20and%20Belarus!%20Send%20a%20letter%20to%20Minister%20Dobrindt!" class="social-icon telegram" title="Share on Telegram">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.tiktok.com/share?url=https://example.com" class="social-icon tiktok" title="Share on TikTok">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                                </svg>
+                            </a>
+                            <a href="https://wa.me/?text=Protect%20humanitarian%20visa%20programs%20in%20Germany%20for%20activists%20from%20Russia%20and%20Belarus!%20Send%20a%20letter%20to%20Minister%20Dobrindt!%20https://example.com" class="social-icon whatsapp" title="Share on WhatsApp">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://example.com" class="social-icon linkedin" title="Share on LinkedIn">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                            <a href="https://reddit.com/submit?url=https://example.com&title=Protect%20humanitarian%20visa%20programs%20in%20Germany%20for%20activists%20from%20Russia%20and%20Belarus!%20Send%20a%20letter%20to%20Minister%20Dobrindt!" class="social-icon reddit" title="Share on Reddit">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="share-card">
+                        <h3 class="share-title">Email Campaign</h3>
+                        <p class="share-description">Forward this campaign to friends, family, and colleagues who care about human rights.</p>
+                        <a href="mailto:?subject=Urgent%3A%20Help%20Protect%20Russian%20Democracy%20Activists&body=I%20wanted%20to%20share%20this%20important%20campaign.%20Please%20take%20a%20moment%20to%20read%20and%20consider%20taking%20action.%0D%0A%0D%0A[Campaign%20Link]" class="share-button email">Send Email</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- German Content -->
+    <div id="de-content" class="language-content active">
+        <div class="urgent-banner">
+            DRINGEND: Russische Aktivisten droht Gefängnissen - Jetzt handeln
+        </div>
+        
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-subtitle">Krisenalarm</div>
+                    <h1>Stoppt das Visa-Verbot</h1>
+                    <p>Deutsche Visa-Beschränkungen drohen russische Demokratie-Befürworter und Menschenrechtsverteidiger zum Schweigen zu bringen. Wir können nicht zulassen, dass Bürokratie zur Waffe gegen die Freiheit wird.</p>
+                    <a href="#letter" class="cta-button">Jetzt Handeln</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="content-section">
+                <h2 class="section-title">Die Krise</h2>
+                <div class="section-subtitle">Leben auf dem Spiel. Demokratie bedroht.</div>
+                <div class="section-content">
+                    <p><strong>Russische Aktivisten, Journalisten und Vertreter der Zivilgesellschaft sehen sich beispielloser Verfolgung gegenüber.</strong> Viele sind nach Deutschland geflohen, um Sicherheit zu finden und ihre wichtige Arbeit für Demokratie und Menschenrechte fortsetzen zu können. Wir sind Deutscher Regierung für diese Möglichkeit dankbar.</p>
+                    <p><strong>Die vorgeschlagenen Visa-Beschränkungen würden nicht nur diese mutigen Menschen gefährden, sondern auch Deutschlands Engagement für den Schutz derer schwächen, die für Freiheit, Demokratie und Menschenwürde kämpfen.</strong></p>
+                </div>
+                
+                <div class="stats-grid">
+<div class="stats-grid">
+  <div class="stat-card">
+    <span class="stat-number">500+</span>
+    <span class="stat-label">Aktivisten in Gefahr</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">6,5</span>
+    <span class="stat-label">Jahre Haft drohen Aktivisten</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">1006</span>
+    <span class="stat-label">Politische Gefangene in Russland</span>
+  </div>
+</div>
+</div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Stimmen von der Front</h2>
+                <div class="section-subtitle">Echte Geschichten. Echte Menschen. Echte Konsequenzen.</div>
+                <div class="stories-grid">
+                    <div class="story-card">
+  <div class="story-media">
+    <div class="photo-placeholder">
+        <img 
+  src="https://i.imgur.com/FPeTN9Z.jpeg" 
+  alt="Anastasiia Lukomskaia" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+    </div>
+  </div>
+  <div class="story-content">
+    <h3 class="story-title">Anastasiia Lukomskaia, Künstlerin und politische Aktivistin</h3>
+    <p class="story-excerpt">
+      Mein Name ist Anastasiia Lukomskaia, ich bin Künstlerin und politische Aktivistin aus Moskau. Ich bin im Sommer 2023 mit einem humanitären Visum nach Deutschland gezogen, da die Organisation, der ich angehörte (die Jugendbewegung „Vesna“), in Russland als extremistisch eingestuft wurde. In den letzten zwei Jahren habe ich Integrationskurse absolviert, die Deutschprüfung auf dem Niveau C1 bestanden und wurde an der HfG Karlsruhe aufgenommen. In meinem neuen Land engagiere ich mich weiterhin aktiv gesellschaftlich – ich bin der FDP beigetreten, wurde in den Beirat für Migration und Integrations von Herxheim gewählt und helfe ehrenamtlich als Dolmetscherin ukrainischen Geflüchteten. Außerdem nehme ich an Ausstellungen und künstlerischen Projekten in Deutschland teil und realisiere immersive Videoinstallationen.
+    </p>
+  </div>
+</div>
+
+<div class="story-card">
+  <div class="story-media">
+    <div class="photo-placeholder">
+      <img 
+  src="https://i.imgur.com/9Vdx5wY.png" 
+  alt="Anna" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+    </div>
+  </div>
+  <div class="story-content">
+    <h3 class="story-title">Anna, Journalistin</h3>
+    <p class="story-excerpt">
+      Im Juni 2024 bin ich mit einem humanitären Visum nach §22 nach Deutschland gekommen. In Russland habe ich als Journalistin für unabhängige Medien im Ausland gearbeitet, darunter auch für deutsche. Ich wurde wegen meines Aktivismus und meiner oppositionellen Tätigkeit von der Polizei festgenommen und stand unter polizeilicher Aufsicht.
+    </p>
+    <p class="story-excerpt">
+      Dank Ihres Visums bin ich in Freiheit geblieben, während viele meiner Freunde und Kolleginnen nun in russischen Gefängnissen sitzen. Seit April 2025 arbeite ich in Deutschland, bezahle meine Miete sowie Steuern.
+    </p>
+    <p class="story-excerpt">
+      In Russland gibt es derzeit viele Menschen, die sich gegen den Krieg ausgesprochen und die Opposition unterstützt haben. Ihnen droht strafrechtliche Verfolgung.
+    </p>
+    <p class="story-excerpt">
+      Ich bitte Sie, den vorübergehenden Stopp der Vergabe humanitärer Visa aufzuheben und diesen Menschen die Chance zu geben, das Land zu verlassen und in Freiheit zu leben.
+    </p>
+  </div>
+</div>
+
+<div class="story-card">
+  <div class="story-media">
+    <div class="photo-placeholder">
+      <img 
+  src="https://i.imgur.com/XAtRBMZ.png" 
+  alt="Anna" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+    </div>
+  </div>
+  <div class="story-content">
+    <h3 class="story-title">Maria, Politische Aktivistin</h3>
+    <p class="story-excerpt">
+      Ich befinde mich derzeit in der letzten Phase der Beantragung eines humanitären Visums für Deutschland. Ich konnte meinen Antrag Mitte März 2025 einreichen (noch vor den Umstrukturierungen im Auswärtigen Amt). Ich bin Journalistin und politische Aktivistin. In Russland kann ich meiner Arbeit nicht nur nicht nachgehen, sondern laufe auch Gefahr, wegen der Teilnahme an einer „extremistischen Organisation“ und der Verbreitung angeblicher „Falschnachrichten“ über die russischen Streitkräfte strafrechtlich verfolgt zu werden.
+    </p>
+  </div>
+</div>
+
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Die Presse</h2>
+                <div class="section-subtitle">Internationale Aufmerksamkeit. Wachsender Druck.</div>
+                <div class="media-grid">
+                    
+                    <a href="https://www.fr.de/politik/dobrindt-setzt-humanitaere-aufnahme-aus-opposition-empoert-macht-die-drecksarbeit-fuer-putin-zr-93853626.html" class="media-card" target="_blank">
+                        <div class="media-player">
+                          <img src="https://www.fr.de/assets/images/39/98/39098283-bundesinnenminister-dobrindt-besucht-bka-2a4WWCWDsfMH.jpg" alt="#" class="cover-photo" />
+                        </div>
+                        <div class="media-info">
+                          <h3 class="media-title">Dobrindt setzt humanitäre Aufnahme aus</h3>
+                          <p class="media-description">Diese Entscheidung trifft besonders Regimegegner hart – auch in Russland. Es hagelt Kritik.</p>
+                          <div class="media-meta">
+                            <span class="media-source">Frankfurter Rundschau</span>
+                            <span class="media-date">Juli 28, 2025</span>
+                          </div>
+                        </div>
+                      </a>
+                    
+                      <a href="https://www.berliner-zeitung.de/politik-gesellschaft/geopolitik/deutschland-stoppt-humanitaere-aufnahmeverfahren-auch-russische-regimegegner-betroffen-li.2344258" class="media-card" target="_blank">
+                        <div class="media-player">
+                          <img src="https://berliner-zeitung.imgix.net/2025/07/24/c0b04280-2bbf-4c33-8b16-4e4caab8dbdc.jpeg" alt="#" class="cover-photo" />
+                        </div>
+                        <div class="media-info">
+                          <h3 class="media-title">Deutschland stoppt humanitäre Aufnahmeverfahren – auch russische Regimegegner betroffen</h3>
+                          <p class="media-description">Deutschland hat die humanitären Aufnahmeprogramme ausgesetzt – politisch verfolgte Russen verlieren damit einen wichtigen legalen Fluchtweg nach Europa.</p>
+                          <div class="media-meta">
+                            <span class="media-source">Berliner Zeitung</span>
+                            <span class="media-date">Juli 24, 2025</span>
+                          </div>
+                        </div>
+                      </a>
+                    
+                      <a href="https://www.tagesspiegel.de/politik/macht-die-drecksarbeit-fur-putin-dobrindt-stoppt-humanitare-aufnahme--auch-fur-russische-opposition-14087636.html" class="media-card" target="_blank">
+                        <div class="media-player">
+                          <img src="https://www.tagesspiegel.de/images/14087609/alternates/BASE_21_9_W1000/1753454122000/11-kabinettsitzung-bundesregierung-auftakt.jpeg" alt="#" class="cover-photo" />
+                        </div>
+                        <div class="media-info">
+                          <h3 class="media-title">„Macht die Drecksarbeit für Putin“: Dobrindt stoppt humanitäre Aufnahme – auch für russische Opposition</h3>
+                          <p class="media-description">Bundesinnenminister Dobrindt hat sämtliche humanitären Aufnahmeprogramme für Geflüchtete gestoppt. Das trifft auch Regimegegner in Russland. Die Grünen sind entsetzt, Kritik kommt auch aus der SPD.</p>
+                          <div class="media-meta">
+                            <span class="media-source">Tagesspiegel</span>
+                            <span class="media-date">Juli 25, 2025</span>
+                          </div>
+                        </div>
+                      </a>
+
+                </div>
+            </section>
+
+    <section class="content-section" id="action">
+  <h2 class="section-title">Schreiben Sie an den Bundesinnenminister</h2>
+  <div class="section-subtitle">Fordern Sie die Wiederaufnahme des humanitären Visa-Programms. Ihre Stimme kann Leben retten.</div>
+
+  <div class="letter-section">
+    <div class="letter-intro">
+      <p><strong>Die deutsche Regierung erwägt die Abschaffung eines humanitären Visaprogramms, das russischen Aktivist:innen, Menschenrechtler:innen und unabhängigen Journalist:innen Schutz geboten hat.</strong> Dies würde Hunderte von Demokratieverteidiger:innen gefährden und ihre Arbeit für die Freiheit unterdrücken.</p>
+      <p><strong>Nutzen Sie diese Briefvorlage, um das Bundesinnenministerium zur Fortführung dieses lebenswichtigen Programms aufzufordern.</strong></p>
+      <p><em><strong>Hinweis:</strong> Der Brief wird auf Deutsch versendet, um maximale Wirkung zu erzielen.</em></p>
+    </div>
+
+    <div class="letter-template">
+      <h3 class="letter-title">Briefvorlage an Minister Dobrindt</h3>
+      <div class="letter-content">
+        <p><strong>Betreff: Dringender Appell zur Bewahrung des humanitären Visa-Programms für die russische Zivilgesellschaft</strong></p>
+
+        <p>Sehr geehrter Herr Minister,</p>
+
+        <p>Ich schreibe Ihnen, um meine große Sorge bezüglich der Berichte auszudrücken, dass die deutsche Regierung erwägt, das humanitäre Visa-Programm für russische zivilgesellschaftliche Aktivist:innen, Journalist:innen und Menschenrechtler:innen zu beenden.</p>
+
+        <p>Dieses Programm war ein Hoffnungsschimmer für Hunderte mutiger Menschen, die ihr Leben der Förderung von Demokratie, Menschenrechten und Rechtsstaatlichkeit in Russland gewidmet haben. Es handelt sich nicht um gewöhnliche Migrant:innen – es sind Stimmen des Gewissens, die alles riskiert haben, um Korruption aufzudecken, politische Gefangene zu verteidigen, Kriegsverbrechen zu dokumentieren und Netzwerke der Zivilgesellschaft zu stärken.</p>
+
+        <p>Die Abschaffung dieses Programms würde:</p>
+        <ul>
+          <li><strong>Demokratieverteidiger:innen zurück in Verfolgung schicken</strong> – vielen drohen Haft, Folter oder Schlimmeres bei Rückkehr nach Russland</li>
+          <li><strong>Kritische Stimmen zum Schweigen bringen</strong> – ihre Arbeit aus Deutschland erreicht Millionen und gibt Hoffnung</li>
+          <li><strong>Deutschlands moralische Führungsrolle untergraben</strong> – das Programm steht für universelle Werte wie Freiheit und Menschenrechte</li>
+          <li><strong>Europäische Sicherheit schwächen</strong> – unabhängige russische Stimmen sind entscheidend im Kampf gegen Desinformation</li>
+        </ul>
+
+        <p>Diese Menschen träumen davon, in ein freies Russland zurückzukehren. Bis dahin brauchen sie Sicherheit und eine Plattform, um weiterzuarbeiten.</p>
+
+        <p>Ich bitte Sie:</p>
+        <ul>
+          <li>Sich für den Erhalt und Ausbau des Programms einzusetzen</li>
+          <li>Ausreichende Mittel und vereinfachte Verfahren sicherzustellen</li>
+          <li>Anerkennen, dass die Unterstützung russischer Zivilgesellschaft eine Investition in Europas Sicherheit und Demokratie ist</li>
+        </ul>
+
+        <p>Die Geschichte wird bewerten, wie wir reagiert haben, als Freiheit bedroht war. Deutschland kann auf der richtigen Seite stehen, indem es dieses Programm bewahrt.</p>
+
+        <p>Mit freundlichen Grüßen,<br>[Ihr Name]<br>[Ihre Adresse]<br>[Ihre Kontaktdaten]</p>
+      </div>
+    </div>
+  </div>
+ <div class="letter-cta">
+  <a href="mailto:poststelle@bmi.bund.de?subject=Appell%20zum%20humanit%C3%A4ren%20Visa-Programm&body=Sehr%20geehrter%20Herr%20Minister,%0D%0A%0D%0AIch%20schreibe%20Ihnen,%20um%20meine%20gro%C3%9Fe%20Sorge%20bezuglich%20der%20Berichte%20auszudr%C3%BCcken,%20dass%20die%20deutsche%20Regierung%20erw%C3%A4gt,%20das%20humanit%C3%A4re%20Visa-Programm%20f%C3%BCr%20russische%20zivilgesellschaftliche%20Aktivist:innen,%20Journalist:innen%20und%20Menschenrechtler:innen%20zu%20beenden.%0D%0A%0D%0ADieses%20Programm%20war%20ein%20Hoffnungsschimmer%20f%C3%BCr%20Hunderte%20mutiger%20Menschen,%20die%20ihr%20Leben%20der%20F%C3%B6rderung%20von%20Demokratie,%20Menschenrechten%20und%20Rechtsstaatlichkeit%20in%20Russland%20gewidmet%20haben.%20Es%20handelt%20sich%20nicht%20um%20gew%C3%B6hnliche%20Migrant:innen%20%E2%80%93%20es%20sind%20Stimmen%20des%20Gewissens,%20die%20alles%20riskiert%20haben,%20um%20Korruption%20aufzudecken,%20politische%20Gefangene%20zu%20verteidigen,%20Kriegsverbrechen%20zu%20dokumentieren%20und%20Netzwerke%20der%20Zivilgesellschaft%20zu%20st%C3%A4rken.%0D%0A%0D%0ADie%20Abschaffung%20dieses%20Programms%20w%C3%BCrde:%0D%0A•%20Demokratieverteidiger:innen%20zur%C3%BCck%20in%20Verfolgung%20schicken%20%E2%80%93%20vielen%20drohen%20Haft,%20Folter%20oder%20Schlimmeres%20bei%20R%C3%BCckkehr%20nach%20Russland%0D%0A•%20Kritische%20Stimmen%20zum%20Schweigen%20bringen%20%E2%80%93%20ihre%20Arbeit%20aus%20Deutschland%20erreicht%20Millionen%20und%20gibt%20Hoffnung%0D%0A•%20Deutschlands%20moralische%20F%C3%BChrungsrolle%20untergraben%20%E2%80%93%20das%20Programm%20steht%20f%C3%BCr%20universelle%20Werte%20wie%20Freiheit%20und%20Menschenrechte%0D%0A•%20Europ%C3%A4ische%20Sicherheit%20schw%C3%A4chen%20%E2%80%93%20unabh%C3%A4ngige%20russische%20Stimmen%20sind%20entscheidend%20im%20Kampf%20gegen%20Desinformation%0D%0A%0D%0ADiese%20Menschen%20tr%C3%A4umen%20davon,%20in%20ein%20freies%20Russland%20zur%C3%BCckzukehren.%20Bis%20dahin%20brauchen%20sie%20Sicherheit%20und%20eine%20Plattform,%20um%20weiterzuarbeiten.%0D%0A%0D%0AIch%20bitte%20Sie:%0D%0A•%20Sich%20f%C3%BCr%20den%20Erhalt%20und%20Ausbau%20des%20Programms%20einzusetzen%0D%0A•%20Ausreichende%20Mittel%20und%20vereinfachte%20Verfahren%20sicherzustellen%0D%0A•%20Anerkennen,%20dass%20die%20Unterst%C3%BCtzung%20russischer%20Zivilgesellschaft%20eine%20Investition%20in%20Europas%20Sicherheit%20und%20Demokratie%20ist%0D%0A%0D%0ADie%20Geschichte%20wird%20bewerten,%20wie%20wir%20reagiert%20haben,%20als%20Freiheit%20bedroht%20war.%20Deutschland%20kann%20auf%20der%20richtigen%20Seite%20stehen,%20indem%20es%20dieses%20Programm%20bewahrt.%0D%0A%0D%0AMit%20freundlichen%20Gr%C3%BC%C3%9Fen,%0D%0A[Ihr%20Name]%0D%0A[Ihre%20Adresse]%0D%0A[Ihre%20Kontaktdaten]" class="cta-button large">Jetzt senden</a>
+</div>
+  </section>
+  <section class="content-section hidden">
+                <h2 class="section-title">Предстоящие События</h2>
+                <div class="section-subtitle">Присоединяйтесь к протестам, митингам и акциям солидарности по всей Европе.</div>
+                
+                <div class="events-grid">
+                    <div class="event-card urgent">
+                        <div class="event-date">
+                            <div class="event-day">22</div>
+                            <div class="event-month">МАР</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Экстренный Митинг: Спасите Российских Активистов</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 22 марта 2024 • 14:00 - 17:00</div>
+                                <div class="event-location">📍 Бранденбургские ворота, Берлин</div>
+                                <div class="event-organizer">👥 Организатор: Коалиция за российское гражданское общество</div>
+                            </div>
+                            <p class="event-description">Массовая демонстрация с требованием к немецкому правительству сохранить гуманитарные визы для российских защитников демократии. Выступят известные активисты, журналисты и правозащитники.</p>
+                            <a href="#" class="event-button">Участвовать в митинге</a>
+                        </div>
+                    </div>
+                    
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">25</div>
+                            <div class="event-month">МАР</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Парламентские Слушания: Визовый Кризис</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 25 марта 2024 • 10:00 - 12:00</div>
+                                <div class="event-location">📍 Бундестаг, Берлин</div>
+                                <div class="event-organizer">👥 Организатор: Комитет по правам человека</div>
+                            </div>
+                            <p class="event-description">Публичные слушания о влиянии визовых ограничений на российское гражданское общество. Граждане могут присутствовать и подавать письменные заявления парламентариям.</p>
+                            <a href="#" class="event-button">Посетить слушания</a>
+                        </div>
+                    </div>
+                    
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">28</div>
+                            <div class="event-month">МАР</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Концерт Солидарности за Свободу</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 28 марта 2024 • 19:00 - 22:00</div>
+                                <div class="event-location">📍 Темподром, Берлин</div>
+                                <div class="event-organizer">👥 Организатор: Артисты за демократию</div>
+                            </div>
+                            <p class="event-description">Благотворительный концерт с участием российских и немецких артистов для сбора средств на правовую поддержку активистов под угрозой. Все доходы идут на помощь с визовыми заявлениями.</p>
+                            <a href="#" class="event-button">Купить билеты</a>
+                        </div>
+                    </div>
+                </div>
+  </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Erzähle von dieser Kampagne</h2>
+                <div class="section-subtitle">Hilf mit, auf dieses wichtige Thema aufmerksam zu machen.</div>
+                
+                <div class="sharing-grid">
+                    <div class="share-card">
+                        <h3 class="share-title">Soziale Medien</h3>
+                        <p class="share-description">Schützen Sie das humanitäre Visaprogramm Deutschlands für politische Aktivist:innen aus Russland und Belarus! Schreiben Sie Minister Dobrindt.</p>
+                        <div class="social-icons">
+                            <a href="https://twitter.com/intent/tweet?text=Schützen%20Sie%20die%20humanitären%20Visaprogramme%20in%20Deutschland%20für%20Aktivisten%20aus%20Russland%20und%20Belarus!%20Senden%20Sie%20einen%20Brief%20an%20Minister%20Dobrindt!
+%20%23SaveRussianActivists%20%23HumanitarianVisas" class="social-icon twitter" title="Share on Twitter">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://example.com" class="social-icon facebook" title="Share on Facebook">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <a href="https://t.me/share/url?url=https://example.com&text=Schützen%20Sie%20die%20humanitären%20Visaprogramme%20in%20Deutschland%20für%20Aktivisten%20aus%20Russland%20und%20Belarus!%20Senden%20Sie%20einen%20Brief%20an%20Minister%20Dobrindt!" class="social-icon telegram" title="Share on Telegram">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.tiktok.com/share?url=https://example.com" class="social-icon tiktok" title="Share on TikTok">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                                </svg>
+                            </a>
+                            <a href="https://wa.me/?text=Schützen%20Sie%20die%20humanitären%20Visaprogramme%20in%20Deutschland%20für%20Aktivisten%20aus%20Russland%20und%20Belarus!%20Senden%20Sie%20einen%20Brief%20an%20Minister%20Dobrindt!20https://example.com" class="social-icon whatsapp" title="Share on WhatsApp">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://example.com" class="social-icon linkedin" title="Share on LinkedIn">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                            <a href="https://reddit.com/submit?url=https://example.com&title=Schützen%20Sie%20die%20humanitären%20Visaprogramme%20in%20Deutschland%20für%20Aktivisten%20aus%20Russland%20und%20Belarus!%20Senden%20Sie%20einen%20Brief%20an%20Minister%20Dobrindt!" class="social-icon reddit" title="Share on Reddit">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="share-card">
+                        <h3 class="share-title">E-Mail-Kampagne</h3>
+                        <p class="share-description">Leite diese Kampagne an Freundinnen, Familie, Kolleginnen und alle weiter, denen Menschenrechte nicht egal sind.</p>
+                        <a href="mailto:?subject=Dringend%3A%20Helfen%20Sie%2C%20russische%20Demokratieaktivisten%20zu%20schützen&body=Ich%20möchte%20diese%20wichtige%20Kampagne%20teilen.%20Bitte%20nehmen%20Sie%20sich%20einen%20Moment%2C%20um%20sie%20zu%20lesen%20und%20über%20eine%20Handlung%20nachzudenken.%0D%0A%0D%0A[Campaign%20Link]" class="share-button email">E-Mail senden</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Russian Content -->
+    <div id="ru-content" class="language-content">
+        <div class="urgent-banner">
+            СРОЧНО: Право на защиту под угрозой. Нужно действовать.
+        </div>
+        
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-subtitle">Сигнал тревоги</div>
+                    <h1>Верните гуманитарные визы</h1>
+                    <p>Немецкие визовые ограничения рискуют лишить голоса российских активистов, журналистов и правозащитников, выступающих против диктатуры. Нельзя допустить, чтобы бюрократия стала инструментом подавления свободы.</p>
+                    <a href="#letter" class="cta-button">Действовать</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="content-section">
+                <h2 class="section-title">Это - чрезвычайная ситуация</h2>
+                <div class="section-subtitle">Свобода и жизни российских политических активистов в опасности</div>
+                <div class="section-content">
+                    <p><strong>Российские активисты, журналисты и общественные деятели сталкиваются с беспрецедентным давлением.</strong> Многие бежали в Германию в поисках безопасности и возможности продолжить свою работу по защите демократии и прав человека благодаря программе выдачи гуманитарных виз. Мы благодарны правительству Германии за эту возможность.</p>
+                    <p><strong>Сейчас эта программа остановлена. </strong> Это не только подвергает опасности смелых россиян, рискующих ради защиты демократических ценностей, но и ставит под сомнение готовность Германии защищать тех, кто борется за свободу и человеческое достоинство.</strong></p>
+                </div>
+                
+                <div class="stats-grid">
+<div class="stats-grid">
+  <div class="stat-card">
+    <span class="stat-number">500+</span>
+    <span class="stat-label">Активистов в Опасности</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">6,5</span>
+    <span class="stat-label">Лет тюрьмы грозит активисту</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-number">1006</span>
+    <span class="stat-label">Политических заключённых в России</span>
+  </div>
+</div>
+</div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Голоса с Передовой</h2>
+                <div class="section-subtitle">Реальные истории. Реальные люди. Реальные последствия.</div>
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <div class="story-media">
+                            <div class="photo-placeholder">
+                                <img 
+  src="https://i.imgur.com/FPeTN9Z.jpeg" 
+  alt="Anastasiia Lukomskaia" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+                            </div>
+                        </div>
+                        <div class="story-content">
+                            <h3 class="story-title">Анастасия Лукомкая, художница и политическая активистка</h3>
+                            <p class="story-excerpt">Меня зовут Анастасия Лукомская, я художница и политическая активистка из Москвы. Я переехала в Германию летом 2023 по гуманитарной визе, поскольку организацию "Весна", в которой я состояла, признали экстремистской в России. За эти 2 года я прошла интеграционные курсы, сдала немецкий на С1 и поступила в немецкий университет (HfG Karlsruhe). В новой стране я продолжаю активно заниматься общественной деятельностью - вступила в партию FDP, избралась в совет по миграции и интеграции Херксхайма и на добровольной основе помогаю украинским беженцам в качестве переводчика. Также я участвую в выставках и художественных проектах на территории Германии и делаю иммерсивные видеоинсталляции.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-media">
+                            <div class="photo-placeholder">
+                                <img 
+  src="https://i.imgur.com/9Vdx5wY.png" 
+  alt="Anna" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+                            </div>
+                        </div>
+                        <div class="story-content">
+                            <h3 class="story-title">Анна, журналистка</h3>
+                            <p class="story-excerpt">В июне 2024 года я приехала в Германию по гуманитарной визе (параграф 22). До этого я жила в России и работала журналистом — снимала и писала для независимых зарубежных СМИ, в том числе и немецких.Из-за своей гражданской позиции, активизма и работы меня задерживали. Я состояла на учете в полиции и числилась в их базе как «неблагонадежная». Благодаря возможности получить гуманитарную визу я смогла уехать и остаться на свободе. К сожалению, мои друзья и коллеги — те, кто показывали правду и выступали против войны и власти — сейчас находятся в тюрьмах.С апреля 2025 года я работаю в Германии. Снимаю жильё, плачу налоги. В России по-прежнему остаются люди, которым грозит уголовное преследование за то, что они говорили о путинском беспределе и репрессиях. Я прошу вас: пожалуйста, пересмотрите решение о временной остановке выдачи гуманитарных виз. Для многих это единственный шанс спастись и сохранить свободу.</p>
+                        </div>
+                    </div>
+                    <div class="story-card">
+                        <div class="story-media">
+                            <div class="photo-placeholder">
+                                <img 
+  src="https://i.imgur.com/XAtRBMZ.png" 
+  alt="Anna" 
+  class="cover-photo"
+  style="max-width: 100%; height: 100%; display: block; margin: 0 auto;" />
+                            </div>
+                        </div>
+                        <div class="story-content">
+                            <h3 class="story-title">Мария, политическая активистка</h3>
+                            <p class="story-excerpt">Я сейчас нахожусь на завершающем этапе получения немецкой гумвизы, успела податься в середине марта 2025 года (до перестановок в МИДе). Я журналистка и политактивистка. 
+                                В России я не просто не могу заниматься своей работой, но и рискую стать жертвой преследований за участие 
+                                в «экстремистской организации» и «фейки» о ВС РФ.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2 class="section-title">Освещение в СМИ</h2>
+                    <div class="section-subtitle">Последние события и общественная реакция</div>
+                        <div class="media-grid">
+
+                            <a href="https://www.dw.com/ru/germania-priostanovila-programmu-priema-inostrancev-po-gumanitarnym-soobrazeniam/a-73389636" class="media-card" target="_blank">
+                                <div class="media-player">
+                                  <img src="https://static.dw.com/image/73196475_1004.webp" alt="#" class="cover-photo" />
+                                </div>
+                                <div class="media-info">
+                                  <h3 class="media-title">ФРГ приостановила программу выдачи гуманитарных виз</h3>
+                                  <p class="media-description">Прием иностранцев "по гуманитарным причинам" временно приостановлен. Новые заявки не будут принимать, визы не будут выдавать, ответили в МВД ФРГ на запрос DW.</p>
+                                  <div class="media-meta">
+                                    <span class="media-source">Deutsche Welle</span>
+                                    <span class="media-date">Июль 25, 2025</span>
+                                  </div>
+                                </div>
+                              </a>
+
+                              <div class="media-card">
+                                <div class="media-player">
+                                    <iframe
+                                      src="https://www.youtube.com/embed/W7yikLXpEjw"
+                                      title="Евродепутат Лагодинский"
+                                      frameborder="0"
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                      allowfullscreen
+                                      style="width: 100%; height: 100%; border: 0;"
+                                    ></iframe>
+
+                                </div>
+                                    <div class="media-info">
+                                        <h3 class="media-title">Евродепутат Лагодинский критикует остановку выдачи гуманитарных виз россиянам и беларусам</h3>
+                    <p class="media-description">Почему выдача должна быть возобновлена, объясняет депутат Европарламента от Германии Сергей Лагодинский. 
+
+
+                    </p>
+                    <div class="media-meta">
+                    <span class="media-source">DW на русском</span>
+                    <span class="media-date">Июль 27, 2025</span>
+                </div>
+            </div>
+        </div>
+                              
+                            <a href="https://www.svoboda.org/a/germaniya-priostanovila-programmu-vydachi-gumanitarnyh-viz/33482117.html" class="media-card" target="_blank">
+                                  <div class="media-player">
+                                    <img src="https://gdb.rferl.org/3a350d7f-3fbe-4671-8de0-e3725317b7a1_w1023_r1_s.jpg" alt="#" class="cover-photo" />
+                                  </div>
+                                  <div class="media-info">
+                                    <h3 class="media-title">Германия приостановила программу выдачи гуманитарных виз</h3>
+                                    <p class="media-description">Германия приостановила программу приёма нуждающихся в защите иностранцев по гуманитарным соображениям. За три года гуманитарные визы получили около 3000 человек из России.</p>
+                                    <div class="media-meta">
+                                      <span class="media-source">Радио Свобода</span>
+                                      <span class="media-date">Июль 23, 2025</span>
+                                    </div>
+                                  </div>
+                            </a>
+
+                            <a href="https://www.moscowtimes.ru/2025/07/28/nado-spasti-programmu-pomoschi-rossiyanam-i-belorusam-v-germanii-a170012" class="media-card" target="_blank">
+                                <div class="media-player">
+                                  <img src="https://static.moscowtimes.ru/image/article_1360/f2/pivovarov.jpg" alt="#" class="cover-photo" />
+                                </div>
+                                <div class="media-info">
+                                  <h3 class="media-title">Надо спасти программу помощи россиянам и белорусам в Германии!</h3>
+                                  <p class="media-description">Власти Германии, исполняя апрельские коалиционные договоренности, на прошлой неделе приостановили программу гуманитарной поддержки. В том числе прекратилась выдача виз для россиян и белорусов.</p>
+                                  <div class="media-meta">
+                                    <span class="media-source">The Moscow Times</span>
+                                    <span class="media-date">Июль 28, 2025</span>
+                                  </div>
+                                </div>
+                              </a>
+
+                </div>
+            </section>
+
+            <section class="content-section" id="action">
+                <h2 class="section-title">Отправьте письмо министру внутренних дел Германии</h2>
+                <div class="section-subtitle">Потребуйте восстановить процесс выдачи гуманитарных виз. Ваш голос может спасти жизни.</div>
+                
+                <div class="letter-section">
+                    <div class="letter-intro">
+                        <p><strong>Немецкое правительство рассматривает возможность прекращения гуманитарной визовой программы, которая стала спасением для российских активистов, правозащитников и независимых журналистов.</strong> Это приведёт к тому, что сотни защитников демократии окажутся под угрозой, а их борьба за свободу будет подавлена.</p>
+                        <p><strong>Используйте этот шаблон письма для обращения в Министерство внутренних дел Германии с требованием сохранить эту жизненно важную программу.</strong></p>
+                        <p><em><strong>Примечание:</strong> Письмо будет отправлено на немецком языке для обеспечения максимальной эффективности.</em></p>                    </div>
+                    
+                    <div class="letter-template">
+                        <h3 class="letter-title">Шаблон письма министру Добриндту</h3>
+                        <div class="letter-content">
+                            <p><strong>Тема: Срочный призыв сохранить гуманитарную визовую программу для российского гражданского общества</strong></p>
+                            
+                            <p>Уважаемый господин Министр,</p>
+                            
+                            <p>Я пишу, чтобы выразить свою глубокую обеспокоенность сообщениями о том, что немецкое правительство рассматривает возможность прекращения гуманитарной визовой программы для российских активистов гражданского общества, журналистов и правозащитников.</p>
+                            
+                            <p>Эта программа была маяком надежды для сотен смелых людей, которые посвятили свою жизнь продвижению демократии, прав человека и верховенства закона в России. Это не обычные мигранты – это голоса совести, которые рискнули всем, чтобы разоблачить коррупцию, защитить политических заключенных, документировать военные преступления и строить сети гражданского общества, которые поддерживают пламя демократии внутри страны, управляемой диктаторским режимом Владимира Путина.</p>
+                            
+                            <p>Предлагаемая ликвидация этой программы:</p>
+                            <ul>
+                                <li><strong>Заставит защитников демократии вернуться на родину</strong> – Многим грозит тюрьма, пытки или хуже при возвращении в Россию</li>
+                                <li><strong>Заставит замолчать голоса критиков режима</strong> – Эти активисты продолжают свою жизненно важную работу из Германии, обращаясь к миллионам внутри России и поддерживая тех, кого парализовал страх внутри России</li>
+                                <li><strong>Подорвет моральное лидерство Германии</strong> – Эта программа воплощает приверженность Германии защите тех, кто борется за универсальные ценности демократии и прав человека</li>
+                                <li><strong>Ослабит европейскую безопасность</strong> – Независимые российские СМИ и гражданское общество имеют решающее значение для противодействия дезинформации и авторитаризму</li>
+                            </ul>
+                            
+                            <p>Эти люди мечтают вернуться в свободную Россию. Но пока этот день не наступил, гуманитарная визовая программа Германии предоставляет им безопасность и платформу, необходимые для продолжения их важной работы.</p>
+                            
+                            <p>Я призываю вас:</p>
+                            <ul>
+                                <li>Выступить за продолжение и расширение гуманитарной визовой программы</li>
+                                <li>Обеспечить адекватное финансирование и упрощенные процедуры для визовых заявлений</li>
+                                <li>Признать, что поддержка российского гражданского общества является инвестицией в европейскую безопасность и демократические ценности</li>
+                            </ul>
+                            
+                            <p>История будет судить о том, как мы отреагировали, когда защитники демократии больше всего нуждались в нашей помощи. У Германии есть возможность встать на правильную сторону истории, сохранив эту спасательную линию к свободе.</p>
+                            
+                            <p>Я с уважением прошу Вас публично объяснить причины остановки выдачи гуманитарных виз россиянам-политическим активистам, а также Вашего немедленного действия по сохранению жизненно важной программы и защите тех, кто рискует всем ради ценностей, которые нам дороги.</p>
+                            
+                            <p>С уважением,<br>[Ваше имя]<br>[Ваш адрес]<br>[Ваша контактная информация]</p>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <div class="letter-cta">
+  <a href="mailto:poststelle@bmi.bund.de?subject=Appell%20zum%20humanit%C3%A4ren%20Visa-Programm&body=Sehr%20geehrter%20Herr%20Minister,%0D%0A%0D%0AIch%20schreibe%20Ihnen,%20um%20meine%20gro%C3%9Fe%20Sorge%20bezuglich%20der%20Berichte%20auszudr%C3%BCcken,%20dass%20die%20deutsche%20Regierung%20erw%C3%A4gt,%20das%20humanit%C3%A4re%20Visa-Programm%20f%C3%BCr%20russische%20zivilgesellschaftliche%20Aktivist:innen,%20Journalist:innen%20und%20Menschenrechtler:innen%20zu%20beenden.%0D%0A%0D%0ADieses%20Programm%20war%20ein%20Hoffnungsschimmer%20f%C3%BCr%20Hunderte%20mutiger%20Menschen,%20die%20ihr%20Leben%20der%20F%C3%B6rderung%20von%20Demokratie,%20Menschenrechten%20und%20Rechtsstaatlichkeit%20in%20Russland%20gewidmet%20haben.%20Es%20handelt%20sich%20nicht%20um%20gew%C3%B6hnliche%20Migrant:innen%20%E2%80%93%20es%20sind%20Stimmen%20des%20Gewissens,%20die%20alles%20riskiert%20haben,%20um%20Korruption%20aufzudecken,%20politische%20Gefangene%20zu%20verteidigen,%20Kriegsverbrechen%20zu%20dokumentieren%20und%20Netzwerke%20der%20Zivilgesellschaft%20zu%20st%C3%A4rken.%0D%0A%0D%0ADie%20Abschaffung%20dieses%20Programms%20w%C3%BCrde:%0D%0A•%20Demokratieverteidiger:innen%20zur%C3%BCck%20in%20Verfolgung%20schicken%20%E2%80%93%20vielen%20drohen%20Haft,%20Folter%20oder%20Schlimmeres%20bei%20R%C3%BCckkehr%20nach%20Russland%0D%0A•%20Kritische%20Stimmen%20zum%20Schweigen%20bringen%20%E2%80%93%20ihre%20Arbeit%20aus%20Deutschland%20erreicht%20Millionen%20und%20gibt%20Hoffnung%0D%0A•%20Deutschlands%20moralische%20F%C3%BChrungsrolle%20untergraben%20%E2%80%93%20das%20Programm%20steht%20f%C3%BCr%20universelle%20Werte%20wie%20Freiheit%20und%20Menschenrechte%0D%0A•%20Europ%C3%A4ische%20Sicherheit%20schw%C3%A4chen%20%E2%80%93%20unabh%C3%A4ngige%20russische%20Stimmen%20sind%20entscheidend%20im%20Kampf%20gegen%20Desinformation%0D%0A%0D%0ADiese%20Menschen%20tr%C3%A4umen%20davon,%20in%20ein%20freies%20Russland%20zur%C3%BCckzukehren.%20Bis%20dahin%20brauchen%20sie%20Sicherheit%20und%20eine%20Plattform,%20um%20weiterzuarbeiten.%0D%0A%0D%0AIch%20bitte%20Sie:%0D%0A•%20Sich%20f%C3%BCr%20den%20Erhalt%20und%20Ausbau%20des%20Programms%20einzusetzen%0D%0A•%20Ausreichende%20Mittel%20und%20vereinfachte%20Verfahren%20sicherzustellen%0D%0A•%20Anerkennen,%20dass%20die%20Unterst%C3%BCtzung%20russischer%20Zivilgesellschaft%20eine%20Investition%20in%20Europas%20Sicherheit%20und%20Demokratie%20ist%0D%0A%0D%0ADie%20Geschichte%20wird%20bewerten,%20wie%20wir%20reagiert%20haben,%20als%20Freiheit%20bedroht%20war.%20Deutschland%20kann%20auf%20der%20richtigen%20Seite%20stehen,%20indem%20es%20dieses%20Programm%20bewahrt.%0D%0A%0D%0AMit%20freundlichen%20Gr%C3%BC%C3%9Fen,%0D%0A[Ihr%20Name]%0D%0A[Ihre%20Adresse]%0D%0A[Ihre%20Kontaktdaten]" class="cta-button large">Отправить письмо</a>
+</div>
+                </div>
+            </section>
+
+  <section class="content-section hidden">
+    <div class="container">
+                <h2 class="section-title">Предстоящие События</h2>
+                <div class="section-subtitle">Присоединяйтесь к протестам, митингам и акциям солидарности по всей Европе.</div>
+                
+                <div class="events-grid">
+                    <div class="event-card urgent">
+                        <div class="event-date">
+                            <div class="event-day">22</div>
+                            <div class="event-month">МАР</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Экстренный Митинг: Спасите Российских Активистов</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 22 марта 2024 • 14:00 - 17:00</div>
+                                <div class="event-location">📍 Бранденбургские ворота, Берлин</div>
+                                <div class="event-organizer">👥 Организатор: Коалиция за российское гражданское общество</div>
+                            </div>
+                            <p class="event-description">Массовая демонстрация с требованием к немецкому правительству сохранить гуманитарные визы для российских защитников демократии. Выступят известные активисты, журналисты и правозащитники.</p>
+                            <a href="#" class="event-button">Участвовать в митинге</a>
+                        </div>
+                    </div>
+                    
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">25</div>
+                            <div class="event-month">МАР</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Парламентские Слушания: Визовый Кризис</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 25 марта 2024 • 10:00 - 12:00</div>
+                                <div class="event-location">📍 Бундестаг, Берлин</div>
+                                <div class="event-organizer">👥 Организатор: Комитет по правам человека</div>
+                            </div>
+                            <p class="event-description">Публичные слушания о влиянии визовых ограничений на российское гражданское общество. Граждане могут присутствовать и подавать письменные заявления парламентариям.</p>
+                            <a href="#" class="event-button">Посетить слушания</a>
+                        </div>
+                    </div>
+                    
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="event-day">28</div>
+                            <div class="event-month">МАР</div>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">Концерт Солидарности за Свободу</h3>
+                            <div class="event-info">
+                                <div class="event-time">📅 28 марта 2024 • 19:00 - 22:00</div>
+                                <div class="event-location">📍 Темподром, Берлин</div>
+                                <div class="event-organizer">👥 Организатор: Артисты за демократию</div>
+                            </div>
+                            <p class="event-description">Благотворительный концерт с участием российских и немецких артистов для сбора средств на правовую поддержку активистов под угрозой. Все доходы идут на помощь с визовыми заявлениями.</p>
+                            <a href="#" class="event-button">Купить билеты</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="container">
+
+                <h2 class="section-title">Расскажите о кампании</h2>
+                <div class="section-subtitle">Помогите нам привлечь внимание к важной проблеме.</div>
+                
+                <div class="sharing-grid">
+                    <div class="share-card">
+                        <h3 class="share-title">Социальные сети</h3>
+                        <p class="share-description">Защитите программу гуманитарных виз в Германии для политических активистов из России и Беларуси! Отправьте письмо Министру Добриндту.</p>
+                        <div class="social-icons">
+                            <a href="https://twitter.com/intent/tweet?text=Защитите%20программы%20гуманитарных%20виз%20в%20Германии%20для%20активистов%20из%20России%20и%20Беларуси!%20Отправьте%20письмо%20министру%20Добриндту!%20%23SaveRussianActivists%20%23HumanitarianVisas" class="social-icon twitter" title="Share on Twitter">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://example.com" class="social-icon facebook" title="Share on Facebook">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <a href="https://t.me/share/url?url=https://example.com&text=Защитите%20программы%20гуманитарных%20виз%20в%20Германии%20для%20активистов%20из%20России%20и%20Беларуси!%20Отправьте%20письмо%20министру%20Добриндту!" class="social-icon telegram" title="Share on Telegram">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.tiktok.com/share?url=https://example.com" class="social-icon tiktok" title="Share on TikTok">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                                </svg>
+                            </a>
+                            <a href="https://wa.me/?text=Защитите%20программы%20гуманитарных%20виз%20в%20Германии%20для%20активистов%20из%20России%20и%20Беларуси!%20Отправьте%20письмо%20министру%20Добриндту!%20https://example.com" class="social-icon whatsapp" title="Share on WhatsApp">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://example.com" class="social-icon linkedin" title="Share on LinkedIn">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                            <a href="https://reddit.com/submit?url=https://example.com&title=Защитите%20программы%20гуманитарных%20виз%20в%20Германии%20для%20активистов%20из%20России%20и%20Беларуси!%20Отправьте%20письмо%20министру%20Добриндту!" class="social-icon reddit" title="Share on Reddit">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="share-card">
+                        <h3 class="share-title">Отправить письмо</h3>
+                        <p class="share-description">Поделитесь кампанией с друзьями, близкими, коллегами, и всеми, кому важны права человека.</p>
+                        <a href="mailto:?subject=Помогите%20защитить%20программу%20гуманитарных%20виз%20в%20Германии%20для%20российских%20и%20беларуских%20политических%20активистов.&body=Ознакомьтесь%20с%20кампанией%20и%20поучаствуйте%20в%20ней.%20Отправьте%20письмо%20министру%20Добриндту.%0D%0A%0D%0A[Campaign%20Link]" class="share-button email">Отправить письмо</a>
+                    </div>
+                </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content" id="footer-text">
+                Demokratie kann nicht im Schweigen überleben. Stehen Sie heute zu russischen Aktivisten.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchLanguage(lang) {
+            // Hide all language content
+            const contents = document.querySelectorAll('.language-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Show selected language content
+            document.getElementById(lang + '-content').classList.add('active');
+            
+            // Update button states
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update footer text
+            const footerTexts = {
+                'en': 'Germany stops humanitarian visas for Russian & Belarusian activists. We fight back!',
+                'de': 'Deutschland stoppt humanitäre Visa für russische & belarussische Aktivist:innen. Wir kämpfen dagegen!',
+                'ru': 'Программа гуманитарных виз в Германии для российских и беларуских активистов остановлена. Мы требуем ее продолжить.'
+            };
+            document.getElementById('footer-text').textContent = footerTexts[lang];
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                let target = document.querySelector(href);
+
+                // if anchor is #letter, search into active lang
+                if (!target && href === '#letter') {
+                target = document.querySelector('.language-content.active .letter-section');
+                }
+
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'966ccde0e4afe532',t:'MTc1Mzc5NDA3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
