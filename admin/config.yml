@@ -1,14 +1,16 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: visaforcourage/visaforcourage
   branch: main
 
-media_folder: ""
-public_folder: ""
+media_folder: "uploads"
+public_folder: "/uploads"
 
 media_library:
   name: uploadcare
   config:
     publicKey: "demopublickey"
+    
 collections:
   - name: "stories"
     label: "Stories"
