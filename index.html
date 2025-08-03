@@ -2001,8 +2001,98 @@
                 }
             });
         });
-
         
-    </script>
+    </script> 
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  function getActiveLang() {
+    if (document.querySelector('#en-content')?.classList.contains('active')) return 'en';
+    if (document.querySelector('#ru-content')?.classList.contains('active')) return 'ru';
+    return 'de';
+  }
+
+  function parseFrontmatter(raw) {
+    const match = raw.match(/^---\s*([\s\S]*?)\s*---\s*([\s\S]*)$/);
+    if (!match) return {meta: {}, body: raw};
+    const yaml = match[1];
+    const body = match[2].trim();
+    const meta = {};
+    yaml.split('\n').forEach(line => {
+      const idx = line.indexOf(':');
+      if (idx === -1) return;
+      const key = line.slice(0, idx).trim();
+      let val = line.slice(idx + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      meta[key] = val;
+    });
+    return {meta, body};
+  }
+
+  async function loadStories() {
+    const lang = getActiveLang();
+    const container = document.querySelector(`#${lang}-content .stories-grid`);
+    if (!container) return;
+    container.innerHTML = ''; // очистка
+
+    const owner = 'visaforcourage';
+    const repo = 'visaforcourage';
+    const branch = 'main';
+    const folder = 'content/stories';
+
+    try {
+      const listResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}?ref=${branch}`);
+      if (!listResp.ok) {
+        container.innerHTML = `<p style="color:red;">Не удалось получить список историй.</p>`;
+        return;
+      }
+      const items = await listResp.json();
+      const mdFiles = items.filter(i => i.type === 'file' && i.name.toLowerCase().endsWith('.md'));
+
+      for (const file of mdFiles) {
+        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${folder}/${encodeURIComponent(file.name)}`;
+        const res = await fetch(rawUrl);
+        if (!res.ok) continue;
+        const text = await res.text();
+        const {meta, body} = parseFrontmatter(text);
+
+        const title = meta[`title_${lang}`] || meta.title || file.name.replace(/[-_]/g, ' ');
+        const excerpt = meta[`description_${lang}`] || '';
+        const image = meta.image || '';
+        const alt = meta[`alt_${lang}`] || title;
+
+        const card = document.createElement('div');
+        card.className = 'story-card';
+        card.innerHTML = `
+          <div class="story-media">
+            <div class="photo-placeholder">
+              ${image ? `<img src="${image}" alt="${alt}" class="cover-photo" />` : ''}
+            </div>
+          </div>
+          <div class="story-content">
+            <h3 class="story-title">${title}</h3>
+            <p class="story-excerpt">${excerpt || (body ? body.slice(0, 160) + '...' : '')}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+    } catch (e) {
+      console.error(e);
+      container.innerHTML = `<p style="color:red;">Ошибка загрузки: ${e.message}</p>`;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadStories();
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(loadStories, 100);
+      });
+    });
+  });
+</script>
+
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'966ccde0e4afe532',t:'MTc1Mzc5NDA3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
