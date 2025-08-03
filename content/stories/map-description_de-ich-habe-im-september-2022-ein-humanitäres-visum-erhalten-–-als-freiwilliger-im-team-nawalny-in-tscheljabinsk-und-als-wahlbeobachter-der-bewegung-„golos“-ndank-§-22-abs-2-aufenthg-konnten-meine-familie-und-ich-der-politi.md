@@ -1,6 +1,6 @@
 ---
 title_en: Evgenii Nasyrov
-title_ru: Евгений Насыров
+title_ru: Евгений Насыров МОЛОДЕЦ
 title_de: Evgenii Nasyrov
 description_en: >-
   I received a humanitarian visa in September 2022 as a volunteer with the
