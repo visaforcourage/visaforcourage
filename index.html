@@ -2150,7 +2150,6 @@
     return active.id.split('-')[0];
   }
 
-  // Улучшенный парсер frontmatter: поддерживает обычные и блочные (|, >) значения
   function parseFrontMatter(md) {
     const fmMatch = md.match(/^---\s*([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
     if (!fmMatch) return { attrs: {}, body: md };
@@ -2162,22 +2161,18 @@
     while (i < lines.length) {
       let line = lines[i];
       if (!line.trim()) { i++; continue; }
-
       const blockMatch = line.match(/^([A-Za-z0-9_]+):\s*(\||>)(\s*)$/);
       if (blockMatch) {
-        // блочный формат
         const key = blockMatch[1];
-        const indicator = blockMatch[2]; // | или >
+        const indicator = blockMatch[2];
         i++;
         const blockLines = [];
         while (i < lines.length && (/^\s+/.test(lines[i]) || lines[i] === '')) {
-          // снимаем одну пробелную отступную единицу
           blockLines.push(lines[i].replace(/^\s?/, ''));
           i++;
         }
         let value = blockLines.join('\n');
         if (indicator === '>') {
-          // складывает строки, как YAML folded
           value = value
             .split('\n')
             .map(l => l.trim())
@@ -2216,7 +2211,7 @@
       </div>
       <div class="media-info">
         <h3 class="media-title">${title}</h3>
-        ${description ? `<div class="media-description">${marked.parse(description)}</div>` : ''}
+        <div class="media-description">${description ? marked.parse(description) : ''}</div>
         <div class="media-meta">
           <span class="media-source">${source || (url ? (new URL(url)).hostname.replace('www.', '') : '')}</span>
           ${date ? `<span class="media-date">${date}</span>` : ''}
@@ -2226,8 +2221,23 @@
     return card;
   }
 
+  // Парсит markdown-таблицу типа | title | description | image | ... | и возвращает объект с ключами
+  function extractFromTable(md) {
+    const lines = md.split(/\r?\n/).map(l => l.trim()).filter(l => l.startsWith('|'));
+    if (lines.length < 3) return {}; // нет таблицы
+    const header = lines[0].split('|').map(s => s.trim()).filter(Boolean);
+    const separator = lines[1];
+    const dataLine = lines[2];
+    const values = dataLine.split('|').map(s => s.trim()).filter(Boolean);
+    const result = {};
+    header.forEach((h, idx) => {
+      result[h.toLowerCase()] = values[idx] || '';
+    });
+    return result;
+  }
+
   async function loadPress() {
-    const lang = getLang(); // 'en'/'de'/'ru'
+    const lang = getLang();
     const container = document.querySelector(`#${lang}-content .media-grid`);
     if (!container) return;
 
@@ -2238,7 +2248,7 @@
       const folder = `content/press/${lang}`;
       const listResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}?ref=${branch}`);
       if (!listResp.ok) {
-        console.warn('Не удалось получить список пресс-материалов', await listResp.text());
+        console.warn('Не получилось список пресс-материалов', await listResp.text());
         return;
       }
       const items = await listResp.json();
@@ -2250,27 +2260,35 @@
         const res = await fetch(rawUrl);
         if (!res.ok) continue;
         const text = await res.text();
+
         const { attrs, body } = parseFrontMatter(text);
 
-        const titleKey = `title_${lang}`;
-        const descKey = `description_${lang}`;
-        const altKey = `alt_${lang}`;
+        // Если frontmatter не дал нужных — пытаемся вытянуть из таблицы
+        let tableData = {};
+        if (!attrs.title || !attrs.description) {
+          tableData = extractFromTable(text);
+        }
 
-        const title = attrs[titleKey] || attrs.title || file.name.replace(/[-_]/g, ' ');
+        const title = (attrs[`title_${lang}`] || attrs.title || tableData.title || file.name.replace(/[-_]/g, ' ')).trim();
         if (newsExists(container, title)) continue;
 
         let description = '';
-        if (attrs[descKey]) {
-          description = attrs[descKey];
+        if (attrs[`description_${lang}`]) {
+          description = attrs[`description_${lang}`];
+        } else if (attrs.description) {
+          description = attrs.description;
+        } else if (tableData.description) {
+          description = tableData.description;
         } else if (body) {
-          const plain = body.replace(/[\r\n]+/g, ' ').trim();
-          description = plain.slice(0, 160) + (plain.length > 160 ? '…' : '');
+          // fallback: первый параграф тела (если не таблица)
+          const para = body.split(/\r?\n\r?\n/)[0].trim();
+          description = para;
         }
 
-        const image = attrs.image || '';
-        const alt = attrs[altKey] || title;
-        const date = attrs.date || '';
-        const source = attrs.source || '';
+        const image = attrs.image || tableData.image || '';
+        const alt = attrs[`alt_${lang}`] || attrs.alt || tableData.alt || title;
+        const source = attrs.source || tableData.source || '';
+        const date = attrs.date || tableData.date || '';
         const url = attrs.url || '';
 
         const card = createNewsCard({
