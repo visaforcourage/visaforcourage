@@ -2051,11 +2051,11 @@
             
             // Update footer text
             const footerTexts = {
-                'en': 'Germany stops humanitarian visas for Russian & Belarusian activists. We fight back!',
-                'de': 'Deutschland stoppt humanitäre Visa für russische & belarussische Aktivist:innen. Wir kämpfen dagegen!',
-                'ru': 'Программа гуманитарных виз в Германии для российских и беларуских активистов остановлена. Мы требуем ее продолжить.'
+                'en': `Germany stops humanitarian visas for Russian & Belarusian activists. We fight back!<br>Navalny's team Germany humvisum22@gmail.com`,
+                'de': `Deutschland stoppt humanitäre Visa für russische & belarussische Aktivist:innen. Wir kämpfen dagegen!<br>Nawalnys Team Deutschland humvisum22@gmail.com`,
+                'ru': `Программа гуманитарных виз в Германии для российских и беларуских активистов остановлена. Мы требуем ее продолжить.<br>Команда Навального Германия humvisum22@gmail.com`
             };
-            document.getElementById('footer-text').textContent = footerTexts[lang];
+            document.getElementById('footer-text').innerHTML = footerTexts[lang];
         }
         
         // Smooth scrolling for anchor links
