@@ -1,7 +1,7 @@
 ---
-title_en: Evgenii Nasyrov, Navalny's Team volunteer
-title_ru: Евгений Насыров, Волонтёр Команды Навального
-title_de: Ewgenii Nasyrov, Freiwilliger im Team Nawalny
+title_en: Evgenii Nasyrov, Coordinator Navalny's Team Germany
+title_ru: Евгений Насыров, Координатор Команды Навального Германия
+title_de: Ewgenii Nasyrov, Koordinator des Nawalnys Team Deutschland
 description_en: >-
   I received a humanitarian visa in September 2022 as a volunteer with the
   Navalny Team in Chelyabinsk and an election observer with the Golos movement.
