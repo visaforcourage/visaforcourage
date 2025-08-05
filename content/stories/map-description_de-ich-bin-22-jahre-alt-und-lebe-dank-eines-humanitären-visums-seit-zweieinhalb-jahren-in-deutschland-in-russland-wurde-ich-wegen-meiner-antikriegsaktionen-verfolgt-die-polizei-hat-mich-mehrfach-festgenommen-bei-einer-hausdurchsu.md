@@ -1,6 +1,6 @@
 ---
 title_en: Ilya Zernov, anti-war activist
-title_ru: Илья Зернов, антивоенный активист.
+title_ru: Илья Зернов, антивоенный активист
 title_de: Ilja Sernow, Antikriegsaktivist
 description_en: >+
   I'm 22 years old and have been living in Germany for two and a half years
