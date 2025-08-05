@@ -2275,7 +2275,7 @@
         const url = attrs.url || '#';
 
         const card = createNewsCard({ title, description, image, alt, source, date, url });
-        container.appendChild(card);
+        container.insertBefore(card, container.firstChild);
       }
     } catch (e) {
       console.error('Ошибка загрузки новостей', e);
