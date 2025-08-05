@@ -2195,6 +2195,7 @@
 </script> 
 
 <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
   function getLang() {
     const active = document.querySelector('.language-content.active');
@@ -2210,26 +2211,31 @@
         body: fmMatch[2]
       };
     } catch (e) {
-      console.error('Ошибка парсинга YAML', e);
-      return { attrs: {}, body: md };
+      console.warn("YAML parse error", e);
+      return { attrs: {}, body: fmMatch[2] };
     }
   }
 
-  function createNewsCard({ title, description, image, source, date, url }) {
+  function newsExists(container, title) {
+    return Array.from(container.querySelectorAll('.media-title'))
+      .some(h => h.textContent.trim() === title.trim());
+  }
+
+  function createNewsCard({ title, description, image, alt, source, date, url }) {
     const card = document.createElement('a');
     card.className = 'media-card';
     card.href = url;
     card.target = '_blank';
     card.innerHTML = `
       <div class="media-player">
-        <img src="${image || ''}" alt="#" class="cover-photo" />
+        <img src="${image}" alt="${alt || title}" class="cover-photo" />
       </div>
       <div class="media-info">
-        <h3 class="media-title">${title || ''}</h3>
-        <p class="media-description">${description || ''}</p>
+        <h3 class="media-title">${title}</h3>
+        <p class="media-description">${description}</p>
         <div class="media-meta">
-          <span class="media-source">${source || ''}</span>
-          <span class="media-date">${date || ''}</span>
+          <span class="media-source">${source}</span>
+          <span class="media-date">${date}</span>
         </div>
       </div>
     `;
@@ -2238,14 +2244,15 @@
 
   async function loadNews() {
     const lang = getLang();
-    const container = document.querySelector(`#${lang}-content .press-grid`);
+    const container = document.querySelector(`#${lang}-content .media-grid`);
     if (!container) return;
 
     const owner = 'visaforcourage', repo = 'visaforcourage', branch = 'main';
     const folder = `content/press/${lang}`;
-
     try {
-      const listResp = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${folder}?ref=${branch}`);
+      const listResp = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/contents/${folder}?ref=${branch}`
+      );
       if (!listResp.ok) return;
       const items = await listResp.json();
       const mdFiles = items.filter(i => i.type === 'file' && /\.md$/i.test(i.name));
@@ -2254,10 +2261,20 @@
         const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${folder}/${encodeURIComponent(file.name)}`;
         const res = await fetch(rawUrl);
         if (!res.ok) continue;
-
         const text = await res.text();
-        const { attrs } = parseFrontMatter(text);
-        const card = createNewsCard(attrs);
+        const { attrs, body } = parseFrontMatter(text);
+
+        const title = attrs.title || file.name.replace(/[-_]/g, ' ');
+        if (newsExists(container, title)) continue;
+
+        const description = attrs.description || body.trim().slice(0, 200) + '...';
+        const image = attrs.image || '';
+        const alt = attrs.alt || title;
+        const source = attrs.source || '';
+        const date = attrs.date || '';
+        const url = attrs.url || '#';
+
+        const card = createNewsCard({ title, description, image, alt, source, date, url });
         container.appendChild(card);
       }
     } catch (e) {
