@@ -2272,7 +2272,8 @@
         const alt = attrs.alt || title;
         const source = attrs.source || '';
         const date = attrs.date || '';
-        const url = attrs.url || '#';
+        const url = attrs.url || attrs.link || '#';
+
 
         const card = createNewsCard({ title, description, image, alt, source, date, url });
         container.insertBefore(card, container.firstChild);
